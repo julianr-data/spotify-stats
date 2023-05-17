@@ -36,7 +36,8 @@ big_df = merge_top_artists_df_into_big_df(user_top_artists_long_term_df, user_to
 
 ## 2. TOP SONGS ##
 
-
+# Retrieving data in dictionary form from Spotify API ('dic')
+user_top_tracks_long_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='long_term') # dictionary of user top tracks
 
 
 
