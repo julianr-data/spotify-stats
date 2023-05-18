@@ -74,3 +74,51 @@ def merge_top_artists_df_into_big_df(df_lt, df_mt, df_st, entity="artist"):
     merged_df['Last Month'] = st_pos
 
     return merged_df
+
+def user_top_tracks_into_df(dic):
+    '''Function to transform top tracks 'dic' data into a dataframe'''
+
+    # Create empty lists to store data, using same structure as reference
+
+    artist_name, artist_url = [], []
+    album_name, album_release_date, album_image_url = [], [], []
+    album_external_url, album_total_tracks = [], []
+    track_duration, track_external_url, track_name, track_popularity = [], [], [], []
+    track_preview_url, track_number_in_album = [], []
+
+    # Further variables to process other stats
+    track_href, track_spoty_id, track_explicit, track_available_markets, album_label, album_group, artist_id = [], [], [], [], [], [], []
+
+    # Loop through dictionary to append data to lists
+    for track in dic['items']:
+        artist_name.append(track['artists'][0]['name'])
+        artist_url.append(track['artists'][0]['external_urls']['spotify'])
+        artist_id.append(track['artists'][0]['id'])
+
+        album_name.append(track['album']['name'])
+        album_release_date.append(track['album']['release_date'])
+        album_image_url.append(track['album']['images'][0]['url'])
+        album_external_url.append(track['album']['external_urls']['spotify'])
+        album_total_tracks.append(track['album']['total_tracks'])
+        album_label.append(track['album']['label'])
+        album_group.append(track['album']['album_type'])
+
+        track_duration.append(track['duration_ms'])
+        track_external_url.append(track['external_urls']['spotify'])
+        track_name.append(track['name'])
+        track_popularity.append(track['popularity'])
+        track_preview_url.append(track['preview_url'])
+        track_number_in_album.append(track['track_number'])
+        track_href.append(track['href'])
+        track_spoty_id.append(track['id'])
+        track_explicit.append(track['explicit'])
+        track_available_markets.append(track['available_markets'])
+
+
+
+
+
+    user_top_tracks_df = pd.DataFrame({'type': typ, 'name': name, 'popularity': popularity,
+                                    'image': image, 'id': idstring, 'url': url, 'uri': uri,
+                                    'artist': artist, 'artist_id': artist_id})
+    return user_top_tracks_df
