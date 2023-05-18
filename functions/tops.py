@@ -28,12 +28,12 @@ def user_top_artists_into_df(dic):
                                         'image': image, 'followers': followers, 'id': idstring, 'url': url, 'uri': uri})
     return user_top_artists_df
 
-def merge_top_artists_df_into_big_df(df_lt, df_mt, df_st, entity="artist"):
+def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):
     '''Function to merge the three dataframes of artists depending on the period into a single dataframe,
     featuring the columns: artist, all time, last 6 months, last month'''
 
     # Deffro's code has this "entity" addition, I think it is to make the function work for songs as well
-    entity_name = 'name' if entity.lower() == "artist" else "song_name"
+    entity_name = 'name' if entity.lower() == "artist" else "track_name"
 
     # Create lists of artist names for each period from dataframes
     lt_names = df_lt[entity_name].tolist()
@@ -93,15 +93,21 @@ def user_top_tracks_into_df(dic):
     for track in dic['items']:
         artist_name.append(track['artists'][0]['name'])
         artist_url.append(track['artists'][0]['external_urls']['spotify'])
-        artist_id.append(track['artists'][0]['id'])
+        artist_id.append(track['artists'][0]['id']) # Not in reference
 
         album_name.append(track['album']['name'])
         album_release_date.append(track['album']['release_date'])
-        album_image_url.append(track['album']['images'][0]['url'])
+        try:
+            album_image_url.append(track['album']['images'][0]['url'])
+        except IndexError:
+            album_image_url.append(np.nan)
         album_external_url.append(track['album']['external_urls']['spotify'])
         album_total_tracks.append(track['album']['total_tracks'])
-        album_label.append(track['album']['label'])
-        album_group.append(track['album']['album_type'])
+        try:
+            album_label.append(track['album']['label']) # Not in reference
+        except KeyError:
+            album_label.append(np.nan)
+        album_group.append(track['album']['album_type']) # Not in reference
 
         track_duration.append(track['duration_ms'])
         track_external_url.append(track['external_urls']['spotify'])
@@ -109,16 +115,22 @@ def user_top_tracks_into_df(dic):
         track_popularity.append(track['popularity'])
         track_preview_url.append(track['preview_url'])
         track_number_in_album.append(track['track_number'])
-        track_href.append(track['href'])
-        track_spoty_id.append(track['id'])
-        track_explicit.append(track['explicit'])
-        track_available_markets.append(track['available_markets'])
+        track_href.append(track['href']) # Not in reference
+        track_spoty_id.append(track['id']) # Not in reference
+        track_explicit.append(track['explicit']) # Not in reference
+        track_available_markets.append(track['available_markets']) # Not in reference, not sure if useful
+
+    # Create dataframe with lists
+    user_top_tracks_df = pd.DataFrame({'artist_name': artist_name, 'artist_url': artist_url, 'artist_id': artist_id,
+                                        'album_name': album_name, 'album_release_date': album_release_date,
+                                        'album_image_url': album_image_url, 'album_external_url': album_external_url,
+                                        'album_total_tracks': album_total_tracks, 'album_label': album_label,
+                                        'album_group': album_group, 'track_duration': track_duration,
+                                        'track_external_url': track_external_url, 'track_name': track_name,
+                                        'track_popularity': track_popularity, 'track_preview_url': track_preview_url,
+                                        'track_number_in_album': track_number_in_album, 'track_href': track_href,
+                                        'track_spoty_id': track_spoty_id, 'track_explicit': track_explicit,
+                                        'track_available_markets': track_available_markets})
 
 
-
-
-
-    user_top_tracks_df = pd.DataFrame({'type': typ, 'name': name, 'popularity': popularity,
-                                    'image': image, 'id': idstring, 'url': url, 'uri': uri,
-                                    'artist': artist, 'artist_id': artist_id})
     return user_top_tracks_df
