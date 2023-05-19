@@ -7,7 +7,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from IPython.display import display
 
 # FUNCTION IMPORTS
-from functions.tops import user_top_artists_into_df, user_top_tracks_into_df, merge_tops_into_big_df
+from functions.tops import user_top_artists_into_df, user_top_tracks_into_df, merge_tops_into_big_df_by_id
 
 # SCOPE
 scope = ["user-top-read", "user-read-playback-state"]
@@ -30,7 +30,7 @@ user_top_artists_medium_term_df = user_top_artists_into_df(user_top_artists_medi
 user_top_artists_short_term_df = user_top_artists_into_df(user_top_artists_short_term_dic)
 
 # Merge dataframes into one big dataframe
-big_artists_df = merge_tops_into_big_df(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df)
+big_artists_df = merge_tops_into_big_df_by_id(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df)
 
 
 
@@ -47,7 +47,7 @@ user_top_tracks_medium_term_df = user_top_tracks_into_df(user_top_tracks_medium_
 user_top_tracks_short_term_df = user_top_tracks_into_df(user_top_tracks_short_term_dic)
 
 # Merge dataframes into one big dataframe
-# big_tracks_df = merge_tops_into_big_df(user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df)
+big_tracks_df = merge_tops_into_big_df_by_id(user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df, entity='track')
 
 
 ## DISPLAY IN TERMINAL FOR TESTING ##
@@ -61,7 +61,8 @@ user_top_tracks_medium_term_df.to_csv('test_csvs/user_top_tracks_medium_term_df.
 print('user_top_tracks_medium_term_df.csv created')
 user_top_tracks_short_term_df.to_csv('test_csvs/user_top_tracks_short_term_df.csv', index=False)
 print('user_top_tracks_short_term_df.csv created')
-# big_tracks_df.to_csv('test_csvs/big_tracks_df.csv', index=False)
-# print('big_tracks_df.csv created')
+big_tracks_df.to_csv('test_csvs/big_tracks_df.csv', index=False)
+print('big_tracks_df.csv created')
+
 big_artists_df.to_csv('test_csvs/big_artists_df.csv', index=False)
 print('big_artists_df.csv created')

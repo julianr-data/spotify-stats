@@ -1,74 +1,123 @@
-Artist,All Time,Last 6 Months,Last Month
-Taylor Swift,1,2,17
-Dua Lipa,2,21,15
-Ariana Grande,3,-,-
-Lizzy McAlpine,4,7,9
-Fito Paez,5,4,1
-Justin Hurwitz,6,1,11
-ROSALÍA,7,16,-
-Julian R. Fogel,8,15,6
-Opeth,9,-,-
-Vulfpeck,10,32,-
-The Beatles,11,3,2
-Mon Laferte,12,-,-
-Lawrence,13,-,-
-Cory Wong,14,-,-
-Rolando Alarcon,15,37,-
-Billie Eilish,16,-,-
-Britney Spears,17,39,-
-Pink Floyd,18,26,-
-Charly García,19,24,8
-Iron Maiden,20,5,-
-Soledad,21,27,-
-Porcupine Tree,22,-,-
-Himesh Patel,23,6,3
-The Barnevelders,24,8,-
-Pedro Aznar,25,-,-
-Destruyan a Los Robots,26,-,-
-Nick Drake,27,20,-
-Shakira,28,17,-
-Nicki Nicole,29,-,-
-Nightwish,30,-,-
-Pacific,31,-,-
-Regina Spektor,32,-,-
-Megadeth,33,-,-
-Los Auténticos Decadentes,34,12,7
-System Of A Down,35,-,-
-Soda Stereo,36,41,-
-Maroon 5,37,14,16
-The Red Army Choir,38,-,-
-Juan Carlos Baglietto,39,-,-
-ocha,40,-,-
-Eric Clapton,41,-,-
-Shefa,42,35,-
-Daniel Barenboim,43,13,-
-Crazy Ex-Girlfriend Cast,44,23,5
-María Elena Walsh,45,29,-
-The xx,46,-,-
-b schmidt,47,-,-
-Leonard Cohen,48,-,-
-No Doubt,49,49,-
-Chango Spasiuk,50,10,-
-Vangelis,-,9,-
-Sabrina Carpenter,-,11,10
-Rodrigo,-,18,-
-Stratovarius,-,19,4
-Maurizio Pollini,-,22,-
-Norah Jones,-,25,-
-Carla Bruni,-,28,-
-Nicolas Horvath,-,30,-
-Frank Zappa,-,31,-
-The Offspring,-,33,-
-Estopa,-,34,-
-Krystian Zimerman,-,36,-
-Evanescence,-,38,-
-Lady Gaga,-,40,-
-Sublime,-,42,-
-Lars Hjalmar Joakim,-,43,-
-Yu Kosuge,-,44,-
-Robbie Williams,-,45,-
-Miranda!,-,46,14
-Babasónicos,-,47,12
-Philip Glass,-,48,-
-Abdulhadi Al Amshan,-,50,13
-Los Abuelos De La Nada,-,-,18
+Artist ID,Artist,All Time,Last 6 Months,Last Month
+06HL4z0CvFAxyc27GXpf02,"0    06HL4z0CvFAxyc27GXpf02
+Name: artist_id, dtype: object",1,2,15
+6M2wZ9GZgrQXHCFfjv46we,"1    6M2wZ9GZgrQXHCFfjv46we
+Name: artist_id, dtype: object",2,22,-
+66CXWjxzNUsdJxJ2JdwvnR,"2    66CXWjxzNUsdJxJ2JdwvnR
+Name: artist_id, dtype: object",3,-,-
+1GmsPCcpKgF9OhlNXjOsbS,"3    1GmsPCcpKgF9OhlNXjOsbS
+Name: artist_id, dtype: object",4,7,9
+1bZNv4q3OxYq7mmnLha7Tu,"4    1bZNv4q3OxYq7mmnLha7Tu
+Name: artist_id, dtype: object",5,4,1
+2snm3HmsnDUDxbIChdl2Oj,"5    2snm3HmsnDUDxbIChdl2Oj
+Name: artist_id, dtype: object",6,1,10
+7ltDVBr6mKbRvohxheJ9h1,"6    7ltDVBr6mKbRvohxheJ9h1
+Name: artist_id, dtype: object",7,16,-
+4yrcVUvbTkZyhyVdsq5vsS,"7    4yrcVUvbTkZyhyVdsq5vsS
+Name: artist_id, dtype: object",8,15,6
+0ybFZ2Ab08V8hueghSXm6E,"8    0ybFZ2Ab08V8hueghSXm6E
+Name: artist_id, dtype: object",9,-,-
+7pXu47GoqSYRajmBCjxdD6,"9    7pXu47GoqSYRajmBCjxdD6
+Name: artist_id, dtype: object",10,32,-
+3WrFJ7ztbogyGnTHbHJFl2,"10    3WrFJ7ztbogyGnTHbHJFl2
+Name: artist_id, dtype: object",11,3,2
+4boI7bJtmB1L3b1cuL75Zr,"11    4boI7bJtmB1L3b1cuL75Zr
+Name: artist_id, dtype: object",12,-,-
+5rwUYLyUq8gBsVaOUcUxpE,"12    5rwUYLyUq8gBsVaOUcUxpE
+Name: artist_id, dtype: object",13,-,-
+6xt9sJmmyYwWkJv8A6ssiU,"13    6xt9sJmmyYwWkJv8A6ssiU
+Name: artist_id, dtype: object",14,-,-
+1zVfOfIieOhrYPFXa6oMEt,"14    1zVfOfIieOhrYPFXa6oMEt
+Name: artist_id, dtype: object",15,37,-
+6qqNVTkY8uBg9cP3Jd7DAH,"15    6qqNVTkY8uBg9cP3Jd7DAH
+Name: artist_id, dtype: object",16,-,-
+26dSoYclwsYLMAKD3tpOr4,"16    26dSoYclwsYLMAKD3tpOr4
+Name: artist_id, dtype: object",17,39,-
+3jO7X5KupvwmWTHGtHgcgo,"17    3jO7X5KupvwmWTHGtHgcgo
+Name: artist_id, dtype: object",18,20,7
+0k17h0D3J5VfsdmQ1iZtE9,"18    0k17h0D3J5VfsdmQ1iZtE9
+Name: artist_id, dtype: object",19,26,-
+6mdiAmATAx73kdxrNrnlao,"19    6mdiAmATAx73kdxrNrnlao
+Name: artist_id, dtype: object",20,5,-
+0K59Fm1y7s3j498ueS4qzY,"20    0K59Fm1y7s3j498ueS4qzY
+Name: artist_id, dtype: object",21,27,-
+5NXHXK6hOCotCF8lvGM1I0,"21    5NXHXK6hOCotCF8lvGM1I0
+Name: artist_id, dtype: object",22,-,-
+7mFiLle487vR83fsFmcKgt,"22    7mFiLle487vR83fsFmcKgt
+Name: artist_id, dtype: object",23,6,3
+0fNbD2JQZjqtjThLWs4QMK,"23    0fNbD2JQZjqtjThLWs4QMK
+Name: artist_id, dtype: object",24,8,-
+2FFrhWZS9vJsh2UvxYPRr6,"24    2FFrhWZS9vJsh2UvxYPRr6
+Name: artist_id, dtype: object",25,-,-
+4wsXXEmFF9uwQSOTFKZvs0,"25    4wsXXEmFF9uwQSOTFKZvs0
+Name: artist_id, dtype: object",26,-,-
+5c3GLXai8YOMid29ZEuR9y,"26    5c3GLXai8YOMid29ZEuR9y
+Name: artist_id, dtype: object",27,21,-
+0EmeFodog0BfCgMzAIvKQp,"27    0EmeFodog0BfCgMzAIvKQp
+Name: artist_id, dtype: object",28,17,-
+2UZIAOlrnyZmyzt1nuXr9y,"28    2UZIAOlrnyZmyzt1nuXr9y
+Name: artist_id, dtype: object",29,-,-
+2NPduAUeLVsfIauhRwuft1,"29    2NPduAUeLVsfIauhRwuft1
+Name: artist_id, dtype: object",30,-,-
+5WLsGgfxV206tL7KD41Ft1,"30    5WLsGgfxV206tL7KD41Ft1
+Name: artist_id, dtype: object",31,-,-
+3z6Gk257P9jNcZbBXJNX5i,"31    3z6Gk257P9jNcZbBXJNX5i
+Name: artist_id, dtype: object",32,-,-
+1Yox196W7bzVNZI7RBaPnf,"32    1Yox196W7bzVNZI7RBaPnf
+Name: artist_id, dtype: object",33,-,-
+3HrbmsYpKjWH1lzhad7alj,"33    3HrbmsYpKjWH1lzhad7alj
+Name: artist_id, dtype: object",34,12,14
+5eAWCfyUhZtHHtBdNk56l1,"34    5eAWCfyUhZtHHtBdNk56l1
+Name: artist_id, dtype: object",35,-,-
+7An4yvF7hDYDolN4m5zKBp,"35    7An4yvF7hDYDolN4m5zKBp
+Name: artist_id, dtype: object",36,41,-
+04gDigrS5kc9YWfZHwBETP,"36    04gDigrS5kc9YWfZHwBETP
+Name: artist_id, dtype: object",37,14,12
+4yNluGAiPbYXLwlA9KspbG,"37    4yNluGAiPbYXLwlA9KspbG
+Name: artist_id, dtype: object",38,-,-
+1Mt6JeVWV9Tvgk8ercp5O9,"38    1Mt6JeVWV9Tvgk8ercp5O9
+Name: artist_id, dtype: object",39,-,-
+2XXkRPi7NhXPf4vOPIG9zh,"39    2XXkRPi7NhXPf4vOPIG9zh
+Name: artist_id, dtype: object",40,-,-
+6PAt558ZEZl0DmdXlnjMgD,"40    6PAt558ZEZl0DmdXlnjMgD
+Name: artist_id, dtype: object",41,-,-
+6865jgnW89TIjWXr3Cuh33,"41    6865jgnW89TIjWXr3Cuh33
+Name: artist_id, dtype: object",42,35,-
+78sEozQOEJxzXegUuqRSgH,"42    78sEozQOEJxzXegUuqRSgH
+Name: artist_id, dtype: object",43,13,-
+5gMEZRCMq0gWA3kuCPukEk,"43    5gMEZRCMq0gWA3kuCPukEk
+Name: artist_id, dtype: object",44,29,-
+3iOvXCl6edW5Um0fXEBRXy,"44    3iOvXCl6edW5Um0fXEBRXy
+Name: artist_id, dtype: object",45,-,-
+4aWC4UPxT80hfTn8uInnte,"45    4aWC4UPxT80hfTn8uInnte
+Name: artist_id, dtype: object",46,-,-
+5l8VQNuIg0turYE1VtM9zV,"46    5l8VQNuIg0turYE1VtM9zV
+Name: artist_id, dtype: object",47,-,-
+0cQbJU1aAzvbEmTuljWLlF,"47    0cQbJU1aAzvbEmTuljWLlF
+Name: artist_id, dtype: object",48,49,-
+2Dzk9smBaIfEFjF7T2Gygz,"48    2Dzk9smBaIfEFjF7T2Gygz
+Name: artist_id, dtype: object",49,24,5
+0qGRkfnUqWeG49vbCv6rMY,"49    0qGRkfnUqWeG49vbCv6rMY
+Name: artist_id, dtype: object",50,10,-
+4P70aqttdpJ9vuYFDmf7f6,"Series([], Name: artist_id, dtype: object)",-,9,-
+74KM79TiuVKeVCqs8QtB0B,"Series([], Name: artist_id, dtype: object)",-,11,8
+235Vf4hkmwvxjVEMuCbRxm,"Series([], Name: artist_id, dtype: object)",-,18,-
+1O8CSXsPwEqxcoBE360PPO,"Series([], Name: artist_id, dtype: object)",-,19,4
+2VIdKQmRHnWofsR4odfFOh,"Series([], Name: artist_id, dtype: object)",-,23,-
+2Kx7MNY7cI1ENniW7vT30N,"Series([], Name: artist_id, dtype: object)",-,25,-
+1HVwzNriKEjaeE06okqSpx,"Series([], Name: artist_id, dtype: object)",-,28,-
+6EyYsJlQEb3uHINVS5EIsB,"Series([], Name: artist_id, dtype: object)",-,30,-
+6ra4GIOgCZQZMOaUECftGN,"Series([], Name: artist_id, dtype: object)",-,31,-
+5LfGQac0EIXyAN8aUwmNAQ,"Series([], Name: artist_id, dtype: object)",-,33,-
+5ZqnEfVdEGmoPxtELhN7ai,"Series([], Name: artist_id, dtype: object)",-,34,-
+43wuPaPcZVMJQWLRaPR4Yz,"Series([], Name: artist_id, dtype: object)",-,36,-
+5nGIFgo0shDenQYSE0Sn7c,"Series([], Name: artist_id, dtype: object)",-,38,-
+1HY2Jd0NmPuamShAr6KMms,"Series([], Name: artist_id, dtype: object)",-,40,-
+0EdvGhlC1FkGItLOWQzG4J,"Series([], Name: artist_id, dtype: object)",-,42,-
+0k5uXmuyASwY2Cwi5TQki4,"Series([], Name: artist_id, dtype: object)",-,43,-
+5tcUjfUAZwX2NMjWU0fqON,"Series([], Name: artist_id, dtype: object)",-,44,-
+2HcwFjNelS49kFbfvMxQYw,"Series([], Name: artist_id, dtype: object)",-,45,-
+2eEmsgWmUFMbtU7agJpnjY,"Series([], Name: artist_id, dtype: object)",-,46,-
+2F9pvj94b52wGKs0OqiNi2,"Series([], Name: artist_id, dtype: object)",-,47,13
+69lxxQvsfAIoQbB20bEPFC,"Series([], Name: artist_id, dtype: object)",-,48,-
+0cjQfBE89pEDpiylE0yp0V,"Series([], Name: artist_id, dtype: object)",-,50,11
