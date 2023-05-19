@@ -173,14 +173,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     lt_pos, mt_pos, st_pos = [], [], []
     lt_names, mt_names, st_names = [], [], []
 
-    # EXPORTING DATAFRAME TO ATTEMPT TO FIND ERROR
-    df_lt.to_csv('DFLT.csv')
-    quit()
-
-
-    print(df_lt.columns)
-
-    for i, idstring in enumerate(lt_ids):
+    for idstring in lt_ids:
 
         # First add the ranking (index) of the entity
         try:
@@ -189,17 +182,9 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
             lt_pos.append('-')
         # Then add the name corresponding to the entity
         if entity_type == 'track_id':
-            lt_names.append(df_lt.loc[df_lt[entity_type] == idstring, 'track_name'][0])
+            lt_names.append(df_lt.loc[df_lt[entity_type] == idstring, 'track_name'].to_string(index=False))
         elif entity_type == 'artist_id':
-            # print(df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'])
-            # print(type(df_lt.loc[df_lt[entity_type] == idstring, 'artist_name']))
-            # lt_names.append(df_lt.loc[df_lt[entity_type] == idstring, 'artist_name']) ### THIS IS NOT WORKING, I'M GETTING A SERIES INSTEAD OF A STRING
-
-            # # extract a string from a pandas series
-            # # https://stackoverflow.com/questions/17071871/select-rows-from-a-dataframe-based-on-values-in-a-column-in-pandas
-
-
-            print(lt_names)
+            lt_names.append(df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'].to_string(index=False))
 
         # Again for mid term
         try:
@@ -207,9 +192,9 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
         except IndexError:
             mt_pos.append('-')
         # if entity_type == 'track_id':
-        #     mt_names.append(df_mt.loc[df_mt[entity_type] == idstring].track_id)
+        #     lt_names.append(df_mt.loc[df_mt[entity_type] == idstring, 'track_name'].to_string(index=False))
         # elif entity_type == 'artist_id':
-        #     mt_names.append(df_mt.loc[df_mt[entity_type] == idstring].artist_id)
+        #     lt_names.append(df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False))
 
         # Again for short term
         try:
@@ -217,9 +202,23 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
         except IndexError:
             st_pos.append('-')
         # if entity_type == 'track_id':
-        #     st_names.append(df_st.loc[df_st[entity_type] == idstring].track_id)
+        #     lt_names.append(df_st.loc[df_st[entity_type] == idstring, 'track_name'].to_string(index=False))
         # elif entity_type == 'armist_id':
-        #     st_names.append(df_st.loc[df_st[entity_type] == idstring].artist_id)
+        #     lt_names.append(df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False))
+
+
+    print(lt_names)
+    print("Number of names:")
+    print(len(lt_names))
+
+    quit()
+
+
+    # hasta ahora el problema es despues de la posicion 49, no encuentra el nombre del artista o cancion y pone series vacias
+    # seguir recorrido de un artist id y ver que mierda pasa que no encuentra el nombre,
+    # el artist id que estoy siguiendo es 4P70aqttdpJ9vuYFDmf7f6 y el nombre es "Vangelis"
+
+
 
     # Create blank dataframe and add lists as columns
     merged_df = pd.DataFrame()
