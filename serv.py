@@ -64,5 +64,12 @@ print('user_top_tracks_short_term_df.csv created')
 big_tracks_df.to_csv('test_csvs/big_tracks_df.csv', index=False)
 print('big_tracks_df.csv created')
 
+user_top_artists_long_term_df.to_csv('test_csvs/user_top_artists_long_term_df.csv', index=False)
+print('user_top_artists_long_term_df.csv created')
+user_top_artists_medium_term_df.to_csv('test_csvs/user_top_artists_medium_term_df.csv', index=False)
+print('user_top_artists_medium_term_df.csv created')
+user_top_artists_short_term_df.to_csv('test_csvs/user_top_artists_short_term_df.csv', index=False)
+print('user_top_artists_short_term_df.csv created')
+
 big_artists_df.to_csv('test_csvs/big_artists_df.csv', index=False)
 print('big_artists_df.csv created')

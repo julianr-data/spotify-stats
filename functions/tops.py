@@ -88,57 +88,6 @@ def user_top_tracks_into_df(dic):
 
     return user_top_tracks_df
 
-def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):
-    '''Function to merge the three dataframes of artists depending on the period into a single dataframe,
-    featuring the columns: artist, all time, last 6 months, last month'''
-
-    print("Got into function")
-
-    # Deffro's code has this "entity" addition, I think it is to make the function work for songs as well
-    entity_name = 'name' if entity.lower() == "artist" else "track_name"
-
-    print("Entity name is: ", entity_name)
-
-    # Create lists of entity names for each period from dataframes
-    lt_names = df_lt[entity_name].tolist()
-    mt_names = df_mt[entity_name].tolist()
-    st_names = df_st[entity_name].tolist()
-
-    # Use long term list as base and append names from other lists if not already in long term list
-    for name in mt_names:
-        if name not in lt_names:
-            lt_names.append(name)
-    for name in st_names:
-        if name not in lt_names:
-            lt_names.append(name)
-
-    # Iterate over name lists, find index of name in each dataframe (ie. position in that time range)
-    # and append to new 'position' lists. If not found, append '-' and move to next list.
-
-    lt_pos, mt_pos, st_pos = [], [], []
-    for name in lt_names:
-        try:
-            lt_pos.append(df_lt.loc[df_lt[entity_name] == name].index.values[0] + 1)
-        except IndexError:
-            lt_pos.append('-')
-        try:
-            mt_pos.append(df_mt.loc[df_mt[entity_name] == name].index.values[0] + 1)
-        except IndexError:
-            mt_pos.append('-')
-        try:
-            st_pos.append(df_st.loc[df_st[entity_name] == name].index.values[0] + 1)
-        except IndexError:
-            st_pos.append('-')
-
-    # Create blank dataframe and add lists as columns
-    merged_df = pd.DataFrame()
-    merged_df[entity.capitalize()] = lt_names
-    merged_df['All Time'] = lt_pos
-    merged_df['Last 6 Months'] = mt_pos
-    merged_df['Last Month'] = st_pos
-
-    return merged_df
-
 def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     '''
     REWRITE OF merge_tops_into_big_df TO USE ID INSTEAD OF NAME
@@ -191,38 +140,92 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
             mt_pos.append(df_mt.loc[df_mt[entity_type] == idstring].index.values[0] + 1)
         except IndexError:
             mt_pos.append('-')
-        # if entity_type == 'track_id':
-        #     lt_names.append(df_mt.loc[df_mt[entity_type] == idstring, 'track_name'].to_string(index=False))
-        # elif entity_type == 'artist_id':
-        #     lt_names.append(df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False))
+        if entity_type == 'track_id':
+            lt_names.append(df_mt.loc[df_mt[entity_type] == idstring, 'track_name'].to_string(index=False))
+        elif entity_type == 'artist_id':
+            lt_names.append(df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False))
 
         # Again for short term
         try:
             st_pos.append(df_st.loc[df_st[entity_type] == idstring].index.values[0] + 1)
         except IndexError:
             st_pos.append('-')
-        # if entity_type == 'track_id':
-        #     lt_names.append(df_st.loc[df_st[entity_type] == idstring, 'track_name'].to_string(index=False))
-        # elif entity_type == 'armist_id':
-        #     lt_names.append(df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False))
+        if entity_type == 'track_id':
+            lt_names.append(df_st.loc[df_st[entity_type] == idstring, 'track_name'].to_string(index=False))
+        elif entity_type == 'armist_id':
+            lt_names.append(df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False))
 
 
-    print(lt_names)
-    print("Number of names:")
-    print(len(lt_names))
+    # After position 49, the name is not found and the function returns a 'Series([], )' string.
+    # Solved this by clearing the list of repeated names and 'Series([], )' strings, without changing the order:
 
-    quit()
+    lt_names = list(dict.fromkeys(lt_names))
+    lt_names = [x for x in lt_names if x != 'Series([], )']
 
-
-    # hasta ahora el problema es despues de la posicion 49, no encuentra el nombre del artista o cancion y pone series vacias
-    # seguir recorrido de un artist id y ver que mierda pasa que no encuentra el nombre,
-    # el artist id que estoy siguiendo es 4P70aqttdpJ9vuYFDmf7f6 y el nombre es "Vangelis"
-
-
+    ###
+    # Debug prints:
+    # print(lt_names)
+    # print("Number of names:")
+    # print(len(lt_names))
+    ###
 
     # Create blank dataframe and add lists as columns
     merged_df = pd.DataFrame()
     merged_df[f"{entity.capitalize()} ID"] = lt_ids
+    merged_df[entity.capitalize()] = lt_names
+    merged_df['All Time'] = lt_pos
+    merged_df['Last 6 Months'] = mt_pos
+    merged_df['Last Month'] = st_pos
+
+    return merged_df
+
+# Deprecated function, use merge_tops_into_big_df_by_id instead:
+def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):
+    '''Deprecated as of 21 May 2023, ID-based function should be used instead. Keeping in case something breaks, this one works'''
+
+    '''Function to merge the three dataframes of artists depending on the period into a single dataframe,
+    featuring the columns: artist, all time, last 6 months, last month'''
+
+    print("Got into function")
+
+    # Deffro's code has this "entity" addition, I think it is to make the function work for songs as well
+    entity_name = 'name' if entity.lower() == "artist" else "track_name"
+
+    print("Entity name is: ", entity_name)
+
+    # Create lists of entity names for each period from dataframes
+    lt_names = df_lt[entity_name].tolist()
+    mt_names = df_mt[entity_name].tolist()
+    st_names = df_st[entity_name].tolist()
+
+    # Use long term list as base and append names from other lists if not already in long term list
+    for name in mt_names:
+        if name not in lt_names:
+            lt_names.append(name)
+    for name in st_names:
+        if name not in lt_names:
+            lt_names.append(name)
+
+    # Iterate over name lists, find index of name in each dataframe (ie. position in that time range)
+    # and append to new 'position' lists. If not found, append '-' and move to next list.
+
+    lt_pos, mt_pos, st_pos = [], [], []
+    for name in lt_names:
+        try:
+            lt_pos.append(df_lt.loc[df_lt[entity_name] == name].index.values[0] + 1)
+        except IndexError:
+            lt_pos.append('-')
+        try:
+            mt_pos.append(df_mt.loc[df_mt[entity_name] == name].index.values[0] + 1)
+        except IndexError:
+            mt_pos.append('-')
+        try:
+            st_pos.append(df_st.loc[df_st[entity_name] == name].index.values[0] + 1)
+        except IndexError:
+            st_pos.append('-')
+
+    # Create blank dataframe and add lists as columns
+    merged_df = pd.DataFrame()
     merged_df[entity.capitalize()] = lt_names
     merged_df['All Time'] = lt_pos
     merged_df['Last 6 Months'] = mt_pos
