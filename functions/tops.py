@@ -40,7 +40,7 @@ def user_top_tracks_into_df(dic):
     track_preview_url, track_number_in_album = [], []
 
     # Further variables to process other stats
-    track_href, track_idstring, track_explicit, track_available_markets, album_label, album_group, artist_id = [], [], [], [], [], [], []
+    track_href, track_idstring, track_explicit, track_available_markets, album_label, album_group, album_genre, artist_id = [], [], [], [], [], [], [], []
 
     # Loop through dictionary to append data to lists
     for track in dic['items']:
@@ -61,6 +61,10 @@ def user_top_tracks_into_df(dic):
         except KeyError:
             album_label.append(np.nan)
         album_group.append(track['album']['album_type']) # Not in reference
+        try:
+            album_genre.append(track['album']['genres']) # Not in reference
+        except KeyError:
+            album_genre.append(np.nan) # Try to get the genre for sunburst (this being the best source). If not possible, append NaN
 
         track_duration.append(track['duration_ms'])
         track_external_url.append(track['external_urls']['spotify'])
@@ -78,7 +82,7 @@ def user_top_tracks_into_df(dic):
                                         'album_name': album_name, 'album_release_date': album_release_date,
                                         'album_image_url': album_image_url, 'album_external_url': album_external_url,
                                         'album_total_tracks': album_total_tracks, 'album_label': album_label,
-                                        'album_group': album_group, 'track_duration': track_duration,
+                                        'album_group': album_group, "album_genre": album_genre, 'track_duration': track_duration,
                                         'track_external_url': track_external_url, 'track_name': track_name,
                                         'track_popularity': track_popularity, 'track_preview_url': track_preview_url,
                                         'track_number_in_album': track_number_in_album, 'track_href': track_href,
@@ -89,8 +93,7 @@ def user_top_tracks_into_df(dic):
     return user_top_tracks_df
 
 def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
-    '''
-    REWRITE OF merge_tops_into_big_df TO USE ID INSTEAD OF NAME
+    '''Rewrite of merge_tops_into_big_df to use ID instead of name.
     Function to merge the three dataframes of artists depending on the period into a single dataframe,
     featuring the columns: artist, all time, last 6 months, last month
     Improved original: using ID to find position instead of name'''
@@ -178,6 +181,8 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     merged_df['Last Month'] = st_pos
 
     return merged_df
+
+# Placeholder for pie chart function
 
 # Deprecated function, use merge_tops_into_big_df_by_id instead:
 def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):

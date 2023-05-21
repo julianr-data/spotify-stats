@@ -4,3 +4,7 @@ commented flow and functions
 requesting more data from API to use in analysis down the road
 improved tops merging function to work by id instead of name, avoiding issues when two tracks of the same name are present
 functions to cat dataframes to csv and to terminal to check correct data flow
+re-did top genres in 3 periods function, attemtpting to take genre from song first, and if not sucessfull, then from artist, to reflect more precisely the genres the listener favours
+
+
+frontend in streamlit, so I re-did it
