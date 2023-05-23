@@ -224,7 +224,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
     trimcounter = 0
     for name in lt_names:
-        while name == 'RETRY ID':
+        if name == 'RETRY ID':
             print("Found a RETRY ID name field")
             i = lt_names.index("RETRY ID")
             print(f"index of RETRY ID element: {i}")
@@ -232,23 +232,27 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
                 lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False)
                 print("got in 1st try")
                 print(lt_names[i])
+                if lt_names[i] == 'Series([], )':
+                    try:
+                        lt_names[i] = df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                        print("got in 2nd try")
+                        print(lt_names[i])
+                        if lt_names[i] == 'Series([], )':
+                            try:
+                                lt_names[i] = df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                                print("got in 3rd try")
+                                print(lt_names[i])
+                            except IndexError:
+                                print("IndexError in df_lt")    # NOT TESTED YET!
+                                trimcounter += 1
+                                print("+1 trimcounter")
+                                pass
+                    except IndexError:
+                        print("IndexError in df_st")
+                        pass
             except IndexError:
                 print("IndexError in df_mt")
                 pass
-            try:
-                lt_names[i] = df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False)
-                print("got in 2nd try")
-                print(lt_names[i])
-            except IndexError:
-                print("IndexError in df_st")
-                pass
-            try:
-                lt_names[i] = df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'].to_string(index=False)
-                print("got in 3rd try")
-                print(lt_names[i])
-            except IndexError:
-                trimcounter += 1
-                print("+1 trimcounter")
 
             # Before going for the trimcounter I can add a pass, then an ad hoc api call to get the name from the id,
             # be sure to account for API error messages, and of course if it still returns 'Series([], )' then
@@ -267,7 +271,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     print(len(lt_ids))
 
 
-    # Trim all lists to the lt_names length if longer than lt_names:
+    # Trim all lists to the lt_names length if longer than lt_names: ## ALL THESE HASNT BEEN TESTED YET BUT SHOULD WORK
     if len(lt_ids) > len(lt_names):
         lt_ids = lt_ids[:len(lt_names)]
         print("Trimmed lt_ids to match lt_names") # Maybe add by how much it was trimmed?
@@ -283,8 +287,6 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     if len(st_pos) > len(lt_names):
         st_pos = st_pos[:len(lt_names)]
         print("Trimmed st_pos to match lt_names")
-
-
 
 
     # Create blank dataframe and add lists as columns

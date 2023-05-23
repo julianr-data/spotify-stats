@@ -30,8 +30,14 @@ user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists
 
 
 big_artists_df = merge_tops_into_big_df_by_id(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df)
-# st.write(big_artists_df)
-# st.write(big_artists_df)
+st.write(big_artists_df)
+
+
+'''VER SI PUEDO CORRER UNA APP.PY SEPARADA PARA EL FRONTEND, Y QUE:
+    1- SE CORRAN DOS SCRIPTS EN PARALELO Y APP TOME VARIABLES DE SERV.PY
+    2- SIMPLEMENTE HACER UNA GRAN FUNCION SERVER QUE CORRA EN SERV.PY Y QUE APP.PY LA LLAME
+
+    LA DOS ME PARECE MEJOR'''
 
 '''NO ME LEE LOS GUIONES EN STREAMLIT, VER COMO HACER PARA QUE NO LOS TOME'''
 
