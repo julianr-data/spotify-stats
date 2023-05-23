@@ -1,8 +1,32 @@
 # IMPORTS
-import pandas as pd
 import numpy as np
+import pandas as pd
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+from IPython.display import display
 
-# FUNCTIONS
+# SCOPE
+scope = ["user-top-read", "user-read-playback-state"]
+
+# CLIENT
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+
+### FUNCTIONS ###
+
+def API_call_top_artists():
+    '''Retrieving data in dictionary form from Spotify API ('dic')
+    Transforming data into dataframes, returning dataframes for long, medium and short term top artists'''
+    user_top_artists_long_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='long_term') # dictionary of user top artists
+    user_top_artists_medium_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='medium_term')
+    user_top_artists_short_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='short_term')
+
+    # Create dataframes from dictionaries
+    user_top_artists_long_term_df = user_top_artists_into_df(user_top_artists_long_term_dic)
+    user_top_artists_medium_term_df = user_top_artists_into_df(user_top_artists_medium_term_dic)
+    user_top_artists_short_term_df = user_top_artists_into_df(user_top_artists_short_term_dic)
+
+    return user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df
+
 def user_top_artists_into_df(dic):
     '''Function to transform top artist 'dic' data into a dataframe'''
 
@@ -105,6 +129,11 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
     print("Entity type is: ", entity_type)
 
+    # print("printing df short term:")
+    # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
+    #     display(df_st)
+
+
     # Create lists of entity names for each period from dataframes
     lt_ids = df_lt[entity_type].tolist()
     mt_ids = df_mt[entity_type].tolist()
@@ -163,14 +192,100 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     # Solved this by clearing the list of repeated names and 'Series([], )' strings, without changing the order:
 
     lt_names = list(dict.fromkeys(lt_names))
+    counter = 0
+    for name in lt_names:
+        if name == 'Series([], )':
+            counter += 1
     lt_names = [x for x in lt_names if x != 'Series([], )']
+    for i in range(counter):
+        lt_names.append('RETRY ID')
+
+    # If the lt_ids list is longer than the lt_names list, it means that there are some names
+    # missing and there will be an error. Trim the list to the same length as lt_names:
+    # if len(lt_ids) > len(lt_names):
+    #     lt_ids = lt_ids[:len(lt_names)]
 
     ###
     # Debug prints:
-    # print(lt_names)
-    # print("Number of names:")
-    # print(len(lt_names))
+    print("DEBUG BEFORE TRIMMING")
+    print(lt_names)
+    print("Number of names:")
+    print(len(lt_names))
+    print()
+    print(lt_ids)
+    print("Number of IDs:")
+    print(len(lt_ids))
     ###
+
+    # Retry ID for failed names
+    # if all this fails, we add +1 to a trimcounter than will them trim all lists so we don't get index errors
+    # this is all done on the basis that whenever a 'series([], )' is found, the id is last in the list, independent
+    # of where the 'series([], )' name is found in the list
+
+    trimcounter = 0
+    for name in lt_names:
+        while name == 'RETRY ID':
+            print("Found a RETRY ID name field")
+            i = lt_names.index("RETRY ID")
+            print(f"index of RETRY ID element: {i}")
+            try:
+                lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                print("got in 1st try")
+                print(lt_names[i])
+            except IndexError:
+                print("IndexError in df_mt")
+                pass
+            try:
+                lt_names[i] = df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                print("got in 2nd try")
+                print(lt_names[i])
+            except IndexError:
+                print("IndexError in df_st")
+                pass
+            try:
+                lt_names[i] = df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                print("got in 3rd try")
+                print(lt_names[i])
+            except IndexError:
+                trimcounter += 1
+                print("+1 trimcounter")
+
+            # Before going for the trimcounter I can add a pass, then an ad hoc api call to get the name from the id,
+            # be sure to account for API error messages, and of course if it still returns 'Series([], )' then
+            # just settle for adding +1 to the trimcounter and moving on.
+
+
+    if trimcounter > 0:
+        lt_names = lt_names[:-trimcounter]
+
+    print(lt_names)
+    print("Number of names:")
+    print(len(lt_names))
+    print()
+    print(lt_ids)
+    print("Number of IDs:")
+    print(len(lt_ids))
+
+
+    # Trim all lists to the lt_names length if longer than lt_names:
+    if len(lt_ids) > len(lt_names):
+        lt_ids = lt_ids[:len(lt_names)]
+        print("Trimmed lt_ids to match lt_names") # Maybe add by how much it was trimmed?
+
+    if len(lt_pos) > len(lt_names):
+        lt_pos = lt_pos[:len(lt_names)]
+        print("Trimmed lt_pos to match lt_names")
+
+    if len(mt_pos) > len(lt_names):
+        mt_pos = mt_pos[:len(lt_names)]
+        print("Trimmed mt_post to match lt_names")
+
+    if len(st_pos) > len(lt_names):
+        st_pos = st_pos[:len(lt_names)]
+        print("Trimmed st_pos to match lt_names")
+
+
+
 
     # Create blank dataframe and add lists as columns
     merged_df = pd.DataFrame()
@@ -184,7 +299,11 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
 # Placeholder for pie chart function
 
-# Deprecated function, use merge_tops_into_big_df_by_id instead:
+
+
+
+
+## Deprecated function, use merge_tops_into_big_df_by_id instead:
 def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):
     '''Deprecated as of 21 May 2023, ID-based function should be used instead. Keeping in case something breaks, this one works'''
 
