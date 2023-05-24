@@ -354,7 +354,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 def count_genres(df):
     gcount = {}
     for genre_object in df['genres']:
-        print("Genre object type is: ", type(genre_object))
+        # print("Genre object type is: ", type(genre_object))
         if genre_object == "Series([], )" or genre_object == []:
             genre_list = ["Uncategorized"]
         else:

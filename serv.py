@@ -56,7 +56,10 @@ sb_df = sb_data(user_top_artists_long_term_df, genre_count)
 # Plotting
 
 fig = px.sunburst(sb_df, path=['genres', "artists"], values="count")
-fig.show()
+fig.update_layout(margin=dict(t=10, l=0, r=0, b=0), title={'text': "visualizing your music taste",
+                                                                   'x': 0.5, 'y': 0.92})
+
+st.plotly_chart(fig)
 
 
 
