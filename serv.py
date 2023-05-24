@@ -62,7 +62,17 @@ fig.update_layout(margin=dict(t=10, l=0, r=0, b=0), title={'text': "visualizing 
 st.plotly_chart(fig)
 
 
+'''tres opciones para solucionar problema de grafico crowdded
+1. graficar solo generos, sin artistas, tomar solo los 10 mas escuchados
+2. graficar solo los 10 generos mas escuchados, con artistas
+3, por cada artista, tomar el genero mas counteado y graficar eso
 
+
+
+
+
+
+'''
 
 
 ## DISPLAY IN TERMINAL FOR TESTING ##

@@ -377,7 +377,12 @@ def sb_data(df, topgenres):
                 art.append(row["artist_name"])
 
     res = pd.DataFrame({"artists": art, "genres": gen, "count": count})
+
+    with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
+        display(res)
+
     return res
+
 
 
 
