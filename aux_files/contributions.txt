@@ -5,6 +5,38 @@ requesting more data from API to use in analysis down the road
 improved tops merging function to work by id instead of name, avoiding issues when two tracks of the same name are present
 functions to cat dataframes to csv and to terminal to check correct data flow
 re-did top genres in 3 periods function, attemtpting to take genre from song first, and if not sucessfull, then from artist, to reflect more precisely the genres the listener favours
+created and adapted sunburst chart functions
+
+
 
 
 frontend in streamlit, so I re-did it
+
+
+
+
+
+
+NOTES:
+if results seem weird its because spotify api tends to return either old or seemengly faulty data, idk
+
+para el sunburst>
+explicar que le procedimiento seria:
+1. Tomar df de largo plazo de artistas
+2. Tomar genero por cada artista
+
+pero de acuerdo a lo que dice aca:
+https://github.com/spotify/web-api/issues/157
+(y a otros posts viejos hasta el 2015 incluso)
+
+lso endpoints de album no tienen genero ni lo han tenido nunca (probabelmente por politicas
+internas de spoty no quieren exponerlos en la api, o directamente porque ni lo usan), de forma que
+la unica alternativa es ver los generos desde el artista
+
+'''
+aclarar en la pagina misma que los generos por cancion pueden no ser correctos, dado que spotify
+no da generos por cancion y que entonces realizamos paroximacion en abse a la categorizacion de los artistas
+
+aclarar que existe un porcentaje siggnificativo de artistas, muchas veces conocidos! que no tienen genero para spotify
+
+'''

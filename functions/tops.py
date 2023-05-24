@@ -27,6 +27,20 @@ def API_call_top_artists():
 
     return user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df
 
+def API_call_top_tracks():
+    '''Retrieving data in dictionary form from Spotify API ('dic')
+    Transforming data into dataframes, returning dataframes for long, medium and short term top tracks'''
+    user_top_tracks_long_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='long_term') # dictionary of user top tracks
+    user_top_tracks_medium_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
+    user_top_tracks_short_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='short_term')
+
+    # Create dataframes from dictionaries
+    user_top_tracks_long_term_df = user_top_tracks_into_df(user_top_tracks_long_term_dic)
+    user_top_tracks_medium_term_df = user_top_tracks_into_df(user_top_tracks_medium_term_dic)
+    user_top_tracks_short_term_df = user_top_tracks_into_df(user_top_tracks_short_term_dic)
+
+    return user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df
+
 def user_top_artists_into_df(dic):
     '''Function to transform top artist 'dic' data into a dataframe'''
 
@@ -207,7 +221,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
     ###
     # Debug prints:
-    print("DEBUG BEFORE TRIMMING")
+    print("PRINTS TO MAKE INITIAL LENGHT COMPARISON")
     print(lt_names)
     print("Number of names:")
     print(len(lt_names))
@@ -223,45 +237,78 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     # of where the 'series([], )' name is found in the list
 
     trimcounter = 0
-    for name in lt_names:
-        if name == 'RETRY ID':
-            print("Found a RETRY ID name field")
-            i = lt_names.index("RETRY ID")
-            print(f"index of RETRY ID element: {i}")
-            try:
-                lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False)
-                print("got in 1st try")
-                print(lt_names[i])
-                if lt_names[i] == 'Series([], )':
-                    try:
-                        lt_names[i] = df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False)
-                        print("got in 2nd try")
-                        print(lt_names[i])
-                        if lt_names[i] == 'Series([], )':
-                            try:
-                                lt_names[i] = df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'].to_string(index=False)
-                                print("got in 3rd try")
-                                print(lt_names[i])
-                            except IndexError:
-                                print("IndexError in df_lt")    # NOT TESTED YET!
-                                trimcounter += 1
-                                print("+1 trimcounter")
-                                pass
-                    except IndexError:
-                        print("IndexError in df_st")
-                        pass
-            except IndexError:
-                print("IndexError in df_mt")
-                pass
+
+    if entity_type == 'artist_id':
+        for name in lt_names:
+            if name == 'RETRY ID':
+                print("Found a RETRY ID name field")
+                i = lt_names.index("RETRY ID")
+                print(f"index of RETRY ID element: {i}")
+                try:
+                    lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                    print("got in 1st try")
+                    print(lt_names[i])
+                    if lt_names[i] == 'Series([], )':
+                        try:
+                            lt_names[i] = df_st.loc[df_st[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                            print("got in 2nd try")
+                            print(lt_names[i])
+                            if lt_names[i] == 'Series([], )':
+                                try:
+                                    lt_names[i] = df_lt.loc[df_lt[entity_type] == idstring, 'artist_name'].to_string(index=False)
+                                    print("got in 3rd try")
+                                    print(lt_names[i])
+                                except IndexError:
+                                    print("IndexError in df_lt")    # NOT TESTED YET!
+                                    trimcounter += 1
+                                    print("+1 trimcounter")
+                                    pass
+                        except IndexError:
+                            print("IndexError in df_st")
+                            pass
+                except IndexError:
+                    print("IndexError in df_mt")
+                    pass
 
             # Before going for the trimcounter I can add a pass, then an ad hoc api call to get the name from the id,
             # be sure to account for API error messages, and of course if it still returns 'Series([], )' then
             # just settle for adding +1 to the trimcounter and moving on.
-
+    else:
+        for name in lt_names:
+            if name == 'RETRY ID':
+                print("Found a RETRY ID name field")
+                i = lt_names.index("RETRY ID")
+                print(f"index of RETRY ID element: {i}")
+                try:
+                    lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'track_name'].to_string(index=False)
+                    print("got in 1st try")
+                    print(lt_names[i])
+                    if lt_names[i] == 'Series([], )':
+                        try:
+                            lt_names[i] = df_st.loc[df_st[entity_type] == idstring, 'track_name'].to_string(index=False)
+                            print("got in 2nd try")
+                            print(lt_names[i])
+                            if lt_names[i] == 'Series([], )':
+                                try:
+                                    lt_names[i] = df_lt.loc[df_lt[entity_type] == idstring, 'track_name'].to_string(index=False)
+                                    print("got in 3rd try")
+                                    print(lt_names[i])
+                                except IndexError:
+                                    print("IndexError in df_lt")    # NOT TESTED YET!
+                                    trimcounter += 1
+                                    print("+1 trimcounter")
+                                    pass
+                        except IndexError:
+                            print("IndexError in df_st")
+                            pass
+                except IndexError:
+                    print("IndexError in df_mt")
+                    pass
 
     if trimcounter > 0:
         lt_names = lt_names[:-trimcounter]
 
+    print("PRINTS TO MAKE SECOND LENGHT COMPARISON, AFTER TRYING TO LOCATE RETRY ID TRUE NAMES")
     print(lt_names)
     print("Number of names:")
     print(len(lt_names))
@@ -272,6 +319,11 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
 
     # Trim all lists to the lt_names length if longer than lt_names: ## ALL THESE HASNT BEEN TESTED YET BUT SHOULD WORK
+
+    if len(lt_names) > len(lt_ids):
+        lt_names = lt_names[:len(lt_ids)]
+        print("Trimmed lt_names to match lt_ids")
+
     if len(lt_ids) > len(lt_names):
         lt_ids = lt_ids[:len(lt_names)]
         print("Trimmed lt_ids to match lt_names") # Maybe add by how much it was trimmed?
@@ -293,13 +345,39 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     merged_df = pd.DataFrame()
     merged_df[f"{entity.capitalize()} ID"] = lt_ids
     merged_df[entity.capitalize()] = lt_names
-    merged_df['All Time'] = lt_pos
-    merged_df['Last 6 Months'] = mt_pos
     merged_df['Last Month'] = st_pos
+    merged_df['Last 6 Months'] = mt_pos
+    merged_df['All Time'] = lt_pos
 
     return merged_df
 
-# Placeholder for pie chart function
+def count_genres(df):
+    gcount = {}
+    for genre_object in df['genres']:
+        print("Genre object type is: ", type(genre_object))
+        if genre_object == "Series([], )" or genre_object == []:
+            genre_list = ["Uncategorized"]
+        else:
+            genre_list = genre_object
+        for genre in genre_list:
+            if genre not in gcount:
+                gcount[genre] = 1
+            else:
+                gcount[genre] += 1
+    gcount = pd.Series(gcount).sort_values(ascending=False)
+    return gcount
+
+def sb_data(df, topgenres):
+    art, gen, count = [], [], []
+    for index, row in df.iterrows():
+        for genre, value in zip(topgenres.index, topgenres.values):
+            if genre in row["genres"]:
+                gen.append(genre)
+                count.append(value)
+                art.append(row["artist_name"])
+
+    res = pd.DataFrame({"artists": art, "genres": gen, "count": count})
+    return res
 
 
 
@@ -358,3 +436,21 @@ def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):
     merged_df['Last Month'] = st_pos
 
     return merged_df
+
+## Deprecated function, converts genres list from object to string (unnecesary) and then counts genres
+def count_genres_deprecated(df):
+    gcount = {}
+    for genre_object in df['genres']:
+        genre_string = genre_object#.to_string(index=False)
+        print(type(genre_string))
+        if genre_string == "Series([], )" or genre_string == "[]":
+            genre_list = ["Uncategorized"]
+        else:
+            genre_list = genre_string[1:-1].replace("'","").replace(", ", ",").split(",")
+        for genre in genre_list:
+            if genre not in gcount:
+                gcount[genre] = 1
+            else:
+                gcount[genre] += 1
+    gcount = pd.Series(gcount).sort_values(ascending=False)
+    return gcount
