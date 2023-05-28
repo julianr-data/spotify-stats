@@ -16,7 +16,7 @@ st.set_page_config(page_title="Spotify Data Analysis",
 
 
 # Sidebar
-st.sidebar.image("frontend/tasti1-transp2.png")
+st.sidebar.image("frontend/tasti1-transp3.png")
 st.sidebar.title("Visualize your music taste")
 
 
@@ -30,12 +30,6 @@ st.sidebar.markdown("The code for this app can be found [here](https://github.co
 
 # Main page
 st.title("Spotify Data Analysis")
-st.markdown("This app is a data analysis of your Spotify account. It will show you your top artists, top songs and a sunburst chart with your music taste.")
-st.markdown("To use this app, you need to have a Spotify account and log in with your credentials. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).")
-st.markdown("If you have any questions, you can contact me on [LinkedIn](https://www.linkedin.com/in/alejandro-fernandez-fernandez/).")
-st.markdown("This app was created by [Alejandro Fernández](https://www.linkedin.com/in/alejandro-fernandez-fernandez/).")
-st.markdown("The code for this app can be found [here]")
-st.markdown("The data for this app comes from the [Spotify API](https://developer.spotify.com/documentation/web-api/).")
 
 # Top artists
 st.header("Top Artists")
@@ -45,7 +39,11 @@ st.markdown("You can hover over the bars to see the name of the artist and the n
 st.markdown("You can also click on the legend to hide or show the artists you want.")
 st.markdown("If you want to see the top artists of a different time period, you can change the time period and click on the button again.")
 st.markdown("If you want to see more artists, you can change the number of artists and click on the button again.")
-st.write(big_art_df)
+
+
+big_art_df_display = big_art_df.drop("Artist ID", axis=1)
+st.dataframe(big_art_df_display)
+
 
 # Top tracks
 st.header("Top Tracks")
@@ -55,7 +53,10 @@ st.markdown("You can hover over the bars to see the name of the track and the nu
 st.markdown("You can also click on the legend to hide or show the tracks you want.")
 st.markdown("If you want to see the top tracks of a different time period, you can change the time period and click on the button again.")
 st.markdown("If you want to see more tracks, you can change the number of tracks and click on the button again.")
-st.write(big_tr_df)
+
+
+big_tr_df_display = big_tr_df.drop("Track ID", axis=1)
+st.dataframe(big_tr_df_display)
 
 # Sunburst
 st.header("Sunburst")
