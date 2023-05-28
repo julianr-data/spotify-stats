@@ -1,0 +1,133 @@
+[33mcommit 37abeb2f517c3e3f5791ed10cd70826b3be098ce[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Thu May 25 01:22:31 2023 +0200
+
+    Starting on some streamlit
+
+[33mcommit 7609195ecfe9e9e2df3053acdde9a1b5fe7abfe5[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Wed May 24 02:39:14 2023 +0200
+
+    Final commit of day
+
+[33mcommit b87d6e706c9c087eca640cebab9307f5f49fb6f1[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Wed May 24 02:27:22 2023 +0200
+
+    Sunburst working for long term, albeit illegible
+
+[33mcommit a5af8290f75287b1a89352176f1b10fbec4fbaa2[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Wed May 24 02:09:59 2023 +0200
+
+    Sunburst working, but needs work
+
+[33mcommit a1067a95596a636829dee68ccea6a85d6cce589c[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Tue May 23 17:49:03 2023 +0200
+
+    Fixed merging function issue, first streamlit steps
+
+[33mcommit b6d87fc177f20f956457f93a26d963239d893735[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Tue May 23 17:33:46 2023 +0200
+
+    Attempting to fix sudden error in merge df function
+
+[33mcommit 7cb4b06def97c35ba6b529b78de1ff171ede5c6a[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Tue May 23 15:32:11 2023 +0200
+
+    Finished sunburst function in notebook
+
+[33mcommit e7e3e9c105e9feb4217dcea99f9b815a6b323830[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Tue May 23 14:03:04 2023 +0200
+
+    working on 3rd attempt at sunburst logic
+
+[33mcommit 9906300f8ce7d1b99e67dfcc2f67a59eb1616a37[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Sun May 21 19:03:25 2023 +0200
+
+    more progress with sb
+
+[33mcommit 20d45ef44f968c5a14e86a681838ede297092063[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Sun May 21 18:21:59 2023 +0200
+
+    making progress with sunburst
+
+[33mcommit 04e4ecfbd2efbec08f334f1e70593e7f1625b89c[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Sun May 21 17:23:40 2023 +0200
+
+    Started working on piechart/sunburst
+
+[33mcommit 05fad2ad4126ba8c145ab592b57c009665640fc4[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Sun May 21 15:51:55 2023 +0200
+
+    All tops functions working 100%
+
+[33mcommit 065d03c18bbc5de179bc6b78230ff93679806c93[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Fri May 19 19:52:32 2023 +0200
+
+    progressed on merge by id function
+
+[33mcommit 96eafee9ed105661e4bb96e400b15123311ecea4[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Fri May 19 18:48:53 2023 +0200
+
+    Working on tops merger function based on ID instead of name, ran into index issue
+
+[33mcommit 014ac839d05b0736f4f5651944568ffcf6cb2ca5[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Thu May 18 12:19:12 2023 +0200
+
+    top tracks into df working, big tracks df merge yields error, csv testing
+
+[33mcommit b1c79d1a68430b4d363092e536fd500a3db0353a[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Thu May 18 11:02:26 2023 +0200
+
+    user_top_tracks_into_df function being built'
+    
+    a
+
+[33mcommit cc2380db565e616f18fafdac8a8b55455a2cb5c0[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Wed May 17 17:22:54 2023 +0200
+
+    started with My Top Tracks feature
+
+[33mcommit f5590be3762dd09edf642a05cd825f2705b95eac[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Wed May 17 17:20:49 2023 +0200
+
+    started with My Top Tracks feature
+
+[33mcommit 80e2796d5854bb6b90d205f63a189109ac98ae3e[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Wed May 17 17:01:25 2023 +0200
+
+    Top Artists feature working in terminal
+
+[33mcommit e815d61022b7a252afdf3cfe868cc357e7a87267[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Tue May 16 16:54:33 2023 +0200
+
+    dfs for top artists, lifted sorting function from reference
+
+[33mcommit 78b7175fdd7e4864c66eea547fe89a8f69be3ff7[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Mon May 15 19:39:24 2023 +0200
+
+    added readme, minor changes
+
+[33mcommit b661faf2cc7add3897d5e1a87289cdb4f6b85cf7[m
+Author: Julian Rodriguez <5545123+julianr-data@users.noreply.github.com>
+Date:   Mon May 15 18:27:38 2023 +0200
+
+    managed to retrieve user top artists from API

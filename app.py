@@ -7,14 +7,26 @@ big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artist
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks ¦ WARNING: API CALLS ARE MADE HERE
 sb_df = genre_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
 
+# Page config
+st.set_page_config(page_title="Spotify Data Analysis",
+                   page_icon="frontend/tasti1-transp2.png",
+                   layout="wide", initial_sidebar_state="expanded",
+                   menu_items={"Report a Bug": "https://github.com/julianr-data/spotify-stats",
+                               "About": "https://github.com/julianr-data/spotify-stats"})
+
+
 # Sidebar
-st.sidebar.title("Spotify Data Analysis")
-st.sidebar.markdown("This app is a data analysis of your Spotify account. It will show you your top artists, top songs and a sunburst chart with your music taste.")
-st.sidebar.markdown("To use this app, you need to have a Spotify account and log in with your credentials. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).")
-st.sidebar.markdown("If you have any questions, you can contact me on [LinkedIn](https://www.linkedin.com/in/alejandro-fernandez-fernandez/).")
-st.sidebar.markdown("This app was created by [Alejandro Fernández](https://www.linkedin.com/in/alejandro-fernandez-fernandez/).")
-st.sidebar.markdown("The code for this app can be found [here]")
-st.sidebar.markdown("The data for this app comes from the [Spotify API](https://developer.spotify.com/documentation/web-api/).")
+st.sidebar.image("frontend/tasti1-transp2.png")
+st.sidebar.title("Visualize your music taste")
+
+
+st.sidebar.markdown("Get an analysis of your Spotify listening habits: top artists, songs, genres, saved items, etc. with colorful charts and graphs.", unsafe_allow_html=True)
+st.sidebar.markdown("To use this app, you need to have a Spotify account. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).", unsafe_allow_html=True)
+st.sidebar.markdown("Your listening data comes from the [Spotify API](https://developer.spotify.com/documentation/web-api/).", unsafe_allow_html=True)
+
+st.sidebar.markdown("© 2023 | Created by [Julián Rodríguez](https://www.linkedin.com/in/julianr-data/)")
+st.sidebar.markdown("[Contact me](https://www.linkedin.com/in/julianr-data/) if you have any questions!")
+st.sidebar.markdown("The code for this app can be found [here](https://github.com/julianr-data/spotify-stats)")
 
 # Main page
 st.title("Spotify Data Analysis")
@@ -58,7 +70,6 @@ st.markdown("If you want to see more artists, you can change the number of artis
 fig = px.sunburst(sb_df, path=['genres', "artists"], values="count")
 fig.update_layout(margin=dict(t=10, l=0, r=0, b=0), title={'text': "visualizing your music taste",'x': 0.5, 'y': 0.92})
 st.plotly_chart(fig)
-
 
 # '''tres opciones para solucionar problema de grafico crowdded
 # 1. graficar solo generos, sin artistas, tomar solo los 10 mas escuchados
