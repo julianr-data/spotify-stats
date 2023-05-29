@@ -8,7 +8,7 @@ from IPython.display import display
 import plotly.express as px
 
 # FUNCTION IMPORTS
-from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data
+from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data, count_top_albums, top_releases_into_df
 
 # These functions are called in app.py to run all logic behind the app:
 
@@ -51,6 +51,12 @@ def genre_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_d
     sb_df_st_top = sb_df_st.head(20)
 
     return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
+
+def top_releases(lt_tracks, mt_tracks, st_tracks):
+    x = top_releases_into_df(lt_tracks)
+    y = top_releases_into_df(mt_tracks)
+    z = top_releases_into_df(st_tracks)
+    return x, y, z
 
 
 

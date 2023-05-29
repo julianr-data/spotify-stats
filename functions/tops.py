@@ -17,8 +17,11 @@ def API_call_top_artists():
     '''Retrieving data in dictionary form from Spotify API ('dic')
     Transforming data into dataframes, returning dataframes for long, medium and short term top artists'''
     user_top_artists_long_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='long_term') # dictionary of user top artists
+    print("\n--- API CALLED FOR TOP ARTISTS LONG TERM ---")
     user_top_artists_medium_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='medium_term')
+    print("\n--- API CALLED FOR TOP ARTISTS MEDIUM TERM ---")
     user_top_artists_short_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='short_term')
+    print("\n--- API CALLED FOR TOP ARTISTS SHORT TERM ---")
 
     # Create dataframes from dictionaries
     user_top_artists_long_term_df = user_top_artists_into_df(user_top_artists_long_term_dic)
@@ -31,8 +34,11 @@ def API_call_top_tracks():
     '''Retrieving data in dictionary form from Spotify API ('dic')
     Transforming data into dataframes, returning dataframes for long, medium and short term top tracks'''
     user_top_tracks_long_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='long_term') # dictionary of user top tracks
+    print("\n--- API CALLED FOR TOP TRACKS LONG TERM ---")
     user_top_tracks_medium_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
+    print("\n--- API CALLED FOR TOP TRACKS MEDIUM TERM ---")
     user_top_tracks_short_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='short_term')
+    print("\n--- API CALLED FOR TOP TRACKS SHORT TERM ---")
 
     # Create dataframes from dictionaries
     user_top_tracks_long_term_df = user_top_tracks_into_df(user_top_tracks_long_term_dic)
@@ -78,7 +84,7 @@ def user_top_tracks_into_df(dic):
     track_preview_url, track_number_in_album = [], []
 
     # Further variables to process other stats
-    track_href, track_idstring, track_explicit, track_available_markets, album_label, album_group, album_genre, artist_id = [], [], [], [], [], [], [], []
+    track_href, track_idstring, track_explicit, track_available_markets, album_label, album_group, album_genre, artist_id, album_id = [], [], [], [], [], [], [], [], []
 
     # Loop through dictionary to append data to lists
     for track in dic['items']:
@@ -87,6 +93,7 @@ def user_top_tracks_into_df(dic):
         artist_id.append(track['artists'][0]['id']) # Not in reference
 
         album_name.append(track['album']['name'])
+        album_id.append(track['album']['id']) # Not in reference
         album_release_date.append(track['album']['release_date'])
         try:
             album_image_url.append(track['album']['images'][0]['url'])
@@ -117,7 +124,7 @@ def user_top_tracks_into_df(dic):
 
     # Create dataframe with lists
     user_top_tracks_df = pd.DataFrame({'artist_name': artist_name, 'artist_url': artist_url, 'artist_id': artist_id,
-                                        'album_name': album_name, 'album_release_date': album_release_date,
+                                        'album_name': album_name, 'album_id': album_id, 'album_release_date': album_release_date,
                                         'album_image_url': album_image_url, 'album_external_url': album_external_url,
                                         'album_total_tracks': album_total_tracks, 'album_label': album_label,
                                         'album_group': album_group, "album_genre": album_genre, 'track_duration': track_duration,
@@ -136,12 +143,12 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     featuring the columns: artist, all time, last 6 months, last month
     Improved original: using ID to find position instead of name'''
 
-    print("Got into function")
+    # print("Got into function")
 
     # Deffro's code has this "entity" addition, I think it is to make the function work for songs as well
     entity_type = 'artist_id' if entity.lower() == "artist" else "track_id"
 
-    print("Entity type is: ", entity_type)
+    # print("Entity type is: ", entity_type)
 
     # print("printing df short term:")
     # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
@@ -221,14 +228,14 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
     ###
     # Debug prints:
-    print("PRINTS TO MAKE INITIAL LENGHT COMPARISON")
-    print(lt_names)
-    print("Number of names:")
-    print(len(lt_names))
-    print()
-    print(lt_ids)
-    print("Number of IDs:")
-    print(len(lt_ids))
+    # print("PRINTS TO MAKE INITIAL LENGHT COMPARISON")
+    # print(lt_names)
+    # print("Number of names:")
+    # print(len(lt_names))
+    # print()
+    # print(lt_ids)
+    # print("Number of IDs:")
+    # print(len(lt_ids))
     ###
 
     # Retry ID for failed names
@@ -378,10 +385,47 @@ def sb_data(df, topgenres):
 
     res = pd.DataFrame({"artists": art, "genres": gen, "count": count})
 
-    with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
-        display(res)
+    # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
+    #     display(res)
 
     return res
+
+def count_top_albums(df):
+    id_count = {}
+    for id in df['album_id']:
+        if id not in id_count:
+            id_count[id] = 1
+        else:
+            id_count[id] += 1
+    alb_id = pd.Series(id_count).sort_values(ascending=False)
+    print(type(alb_id))
+    return alb_id
+
+def top_releases_into_df(df):
+    count = count_top_albums(df)
+    album_names = df.set_index('album_id')["album_name"].to_frame()
+    album_prevalence = album_names.merge(count.rename('count'), left_index=True, right_index=True).drop_duplicates().sort_values(by='count', ascending=False).head(20)
+    album_prevalence = album_prevalence.reset_index().rename(columns={'album_name': 'Album Name', 'count': 'Nº of songs in this period'}).drop('album_id', axis=1)
+    return album_prevalence
+
+
+
+
+
+
+
+
+
+
+    # user_all_top_tracks = pd.concat([user_top_tracks_data_long_term, user_top_tracks_data_medium_term,
+    #                                  user_top_tracks_data_short_term])
+    # user_top_albums = user_all_top_tracks.groupby('album_name')['song_name']. \
+    #     count().to_frame().reset_index().sort_values(by='song_name', ascending=False).head()
+    # user_top_albums = user_top_albums.merge(user_all_top_tracks.drop(['song_name'], axis=1),
+    #                                         how='left', on='album_name')[['album_name', 'artist_name', 'song_name']]
+    # user_top_albums = user_top_albums.rename(
+    #     columns={'album_name': 'Album', 'artist_name': 'Artist',
+    #              'song_name': 'Tracks'}).drop_duplicates()
 
 
 
@@ -395,12 +439,12 @@ def merge_tops_into_big_df(df_lt, df_mt, df_st, entity="artist"):
     '''Function to merge the three dataframes of artists depending on the period into a single dataframe,
     featuring the columns: artist, all time, last 6 months, last month'''
 
-    print("Got into function")
+    # print("Got into function")
 
     # Deffro's code has this "entity" addition, I think it is to make the function work for songs as well
     entity_name = 'name' if entity.lower() == "artist" else "track_name"
 
-    print("Entity name is: ", entity_name)
+    # print("Entity name is: ", entity_name)
 
     # Create lists of entity names for each period from dataframes
     lt_names = df_lt[entity_name].tolist()
@@ -447,7 +491,7 @@ def count_genres_deprecated(df):
     gcount = {}
     for genre_object in df['genres']:
         genre_string = genre_object#.to_string(index=False)
-        print(type(genre_string))
+        # print(type(genre_string))
         if genre_string == "Series([], )" or genre_string == "[]":
             genre_list = ["Uncategorized"]
         else:

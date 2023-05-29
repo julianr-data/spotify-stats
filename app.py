@@ -1,4 +1,4 @@
-from server import top_art, top_songs, genre_analysis
+from server import top_art, top_songs, genre_analysis, top_releases
 import streamlit as st
 import plotly.express as px
 import seaborn as sns
@@ -8,6 +8,7 @@ import pandas as pd
 big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artists ¦ WARNING: API CALLS ARE MADE HERE
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks ¦ WARNING: API CALLS ARE MADE HERE
 sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top = genre_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
+top_rel_lt, top_rel_mt, top_rel_st = top_releases(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top releases
 
 # Page config
 st.set_page_config(page_title="Spotify Data Analysis",
@@ -15,7 +16,6 @@ st.set_page_config(page_title="Spotify Data Analysis",
                    layout="wide", initial_sidebar_state="expanded",
                    menu_items={"Report a Bug": "https://github.com/julianr-data/spotify-stats",
                                "About": "https://github.com/julianr-data/spotify-stats"})
-
 
 # Sidebar
 st.sidebar.image("frontend/tasti1-transp3.png")
@@ -57,7 +57,7 @@ col3, col4 = st.columns(2)
 
 with col3:
     # Sunburst
-    st.header("Genre Analysis")
+    st.subheader("Genre Analysis")
 
     chosen_sb = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=True, label_visibility="hidden")
     # st.subheader(f"Top Genres - {chosen_sb}")
@@ -77,11 +77,19 @@ with col3:
         fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
         st.plotly_chart(fig, use_container_width=True)
 
+with col4:
+    st.subheader("Most listened releases")
+    chosen_df = st.radio("Choose a time frame:", ("all Time", "last 6 Months", "last Month"), horizontal=True, label_visibility="hidden")
+
+    if chosen_df == "all Time":
+        st.write(top_rel_lt)
+    elif chosen_df == "last 6 Months":
+        st.write(top_rel_mt)
+    elif chosen_df == "last Month":
+        st.write(top_rel_st)
+
 st.markdown("""---""")
 
-with col4:
-    st.header("Most listened albums")
-    st.write(big_art_df_display)
 
 
 

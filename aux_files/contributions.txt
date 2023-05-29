@@ -8,7 +8,7 @@ re-did top genres in 3 periods function, attemtpting to take genre from song fir
 created and adapted sunburst chart functions
 
 
-
+changed top albums logic: now its by period
 
 frontend in streamlit, so I re-did it
 
