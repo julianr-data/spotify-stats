@@ -8,7 +8,7 @@ from IPython.display import display
 import plotly.express as px
 
 # FUNCTION IMPORTS
-from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data, count_top_albums, top_releases_into_df
+from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart
 
 # These functions are called in app.py to run all logic behind the app:
 
@@ -58,6 +58,11 @@ def top_releases(lt_tracks, mt_tracks, st_tracks):
     z = top_releases_into_df(st_tracks)
     return x, y, z
 
+def top_tracks_vs_release(lt_tracks, mt_tracks, st_tracks):
+    x = top_tracks_vs_release_chart(lt_tracks)
+    y = top_tracks_vs_release_chart(mt_tracks)
+    z = top_tracks_vs_release_chart(st_tracks)
+    return x, y, z
 
 
 

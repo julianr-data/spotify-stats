@@ -1,4 +1,4 @@
-from server import top_art, top_songs, genre_analysis, top_releases
+from server import top_art, top_songs, genre_analysis, top_releases, top_tracks_vs_release
 import streamlit as st
 import plotly.express as px
 import seaborn as sns
@@ -9,6 +9,7 @@ big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artist
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks ¦ WARNING: API CALLS ARE MADE HERE
 sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top = genre_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
 top_rel_lt, top_rel_mt, top_rel_st = top_releases(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top releases
+tr_vs_date_lt, tr_vs_date_mt, tr_vs_date_st = top_tracks_vs_release(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top tracks vs release date
 
 # Page config
 st.set_page_config(page_title="Spotify Data Analysis",
@@ -91,6 +92,9 @@ with col4:
 st.markdown("""---""")
 
 # Top tracks vs release date
+
+st.plotly_chart(tr_vs_date_lt, use_container_width=True)
+
 
 
 

@@ -4,6 +4,7 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from IPython.display import display
+import plotly.express as px
 
 # SCOPE
 scope = ["user-top-read", "user-read-playback-state"]
@@ -409,7 +410,30 @@ def top_releases_into_df(df):
     return album_prevalence
 
 
+def top_tracks_vs_release_chart(df):
 
+    df.rename(columns={"track_popularity": "Popularity", "album_release_date": "Release Date",
+                       "track_duration": "Track Lenght", "artist_name": "Artist",
+                       "track_name": "Track Name"}, inplace=True)
+
+    bubfig = px.scatter(df, x="Release Date", y="Popularity",
+                        size="Track Lenght", color="Artist",
+                        hover_name="Track Name", size_max=30)
+
+    bubfig.update_layout(yaxis=dict(gridcolor='#53f34a'),
+                    xaxis=dict(gridcolor='#000000'), plot_bgcolor='#232323',
+                    legend=dict(
+                        xanchor='center',
+                        yanchor='top',
+                        y=-0.3,
+                        x=0.5,
+                        orientation='h')
+                    )
+
+    # update axis labels:
+    bubfig.update_xaxes(title_text='Release Date')
+    bubfig.update_yaxes(title_text='Current Popularity')
+    return bubfig
 
 
 
