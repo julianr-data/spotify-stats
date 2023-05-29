@@ -38,9 +38,19 @@ def top_songs():
 
 def genre_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df):
     ## 3. GENRE ANALYSIS ##
-    genre_count = count_genres(user_top_artists_long_term_df)
-    sb_df = sb_data(user_top_artists_long_term_df, genre_count)
-    return sb_df
+    genre_count_lt = count_genres(user_top_artists_long_term_df)
+    sb_df_lt = sb_data(user_top_artists_long_term_df, genre_count_lt)
+    sb_df_lt_top = sb_df_lt.head(20)
+
+    genre_count_mt = count_genres(user_top_artists_medium_term_df)
+    sb_df_mt = sb_data(user_top_artists_medium_term_df, genre_count_mt)
+    sb_df_mt_top = sb_df_mt.head(20)
+
+    genre_count_st = count_genres(user_top_artists_short_term_df)
+    sb_df_st = sb_data(user_top_artists_short_term_df, genre_count_st)
+    sb_df_st_top = sb_df_st.head(20)
+
+    return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
 
 
 

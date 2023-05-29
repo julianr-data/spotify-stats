@@ -1,11 +1,13 @@
 from server import top_art, top_songs, genre_analysis
 import streamlit as st
 import plotly.express as px
+import seaborn as sns
+import pandas as pd
 
 # Dataframes from server.py
 big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artists ¦ WARNING: API CALLS ARE MADE HERE
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks ¦ WARNING: API CALLS ARE MADE HERE
-sb_df = genre_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
+sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top = genre_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
 
 # Page config
 st.set_page_config(page_title="Spotify Data Analysis",
@@ -19,7 +21,6 @@ st.set_page_config(page_title="Spotify Data Analysis",
 st.sidebar.image("frontend/tasti1-transp3.png")
 st.sidebar.title("Visualize your music taste")
 
-
 st.sidebar.markdown("Get an analysis of your Spotify listening habits: top artists, songs, genres, saved items, etc. with colorful charts and graphs.", unsafe_allow_html=True)
 st.sidebar.markdown("To use this app, you need to have a Spotify account. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).", unsafe_allow_html=True)
 st.sidebar.markdown("Your listening data comes from the [Spotify API](https://developer.spotify.com/documentation/web-api/).", unsafe_allow_html=True)
@@ -30,47 +31,77 @@ st.sidebar.markdown("The code for this app can be found [here](https://github.co
 
 # Main page
 st.title("Spotify Data Analysis")
+st.markdown("""---""")
+
+# Top artists and tracks
+col1, col2 = st.columns(2)
+cm = sns.light_palette("seagreen", reverse=True, as_cmap=True)
 
 # Top artists
-st.header("Top Artists")
-st.markdown("Here you can see your top artists. You can choose between the last 4 weeks, the last 6 months or all time.")
-st.markdown("You can also choose how many artists you want to see. The default is 10.")
-st.markdown("You can hover over the bars to see the name of the artist and the number of times you have listened to them.")
-st.markdown("You can also click on the legend to hide or show the artists you want.")
-st.markdown("If you want to see the top artists of a different time period, you can change the time period and click on the button again.")
-st.markdown("If you want to see more artists, you can change the number of artists and click on the button again.")
+with col1:
+    st.subheader("Top Artists")
+    big_art_df_display = big_art_df.drop("Artist ID", axis=1) # .style.background_gradient(cmap=cm)
+    st.write(big_art_df_display)
+
+with col2:
+    # Top tracks
+    st.subheader("Top Tracks")
+    big_tr_df_display = big_tr_df.drop("Track ID", axis=1)
+    st.dataframe(big_tr_df_display)
+
+st.markdown("""---""")
+
+# Sunburst and other graph
+
+col3, col4 = st.columns(2)
+
+with col3:
+    # Sunburst
+    st.header("Genre Analysis")
+
+    chosen_sb = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=True, label_visibility="hidden")
+    # st.subheader(f"Top Genres - {chosen_sb}")
+
+    if chosen_sb == "All Time":
+        fig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count")
+        fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+        st.plotly_chart(fig, use_container_width=True)
+
+    elif chosen_sb == "Last 6 Months":
+        fig = px.sunburst(sb_df_mt_top, path=['genres', "artists"], values="count")
+        fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+        st.plotly_chart(fig, use_container_width=True)
+
+    elif chosen_sb == "Last Month":
+        fig = px.sunburst(sb_df_st_top, path=['genres', "artists"], values="count")
+        fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+        st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""---""")
 
 
-big_art_df_display = big_art_df.drop("Artist ID", axis=1)
-st.dataframe(big_art_df_display)
+
+# col3, col4, col5 = st.columns(3)
+# with col3:
+#     st.subheader("Long Term")
+#     fig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count")
+#     fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+#     st.plotly_chart(fig, use_container_width=True)
 
 
-# Top tracks
-st.header("Top Tracks")
-st.markdown("Here you can see your top tracks. You can choose between the last 4 weeks, the last 6 months or all time.")
-st.markdown("You can also choose how many tracks you want to see. The default is 10.")
-st.markdown("You can hover over the bars to see the name of the track and the number of times you have listened to it.")
-st.markdown("You can also click on the legend to hide or show the tracks you want.")
-st.markdown("If you want to see the top tracks of a different time period, you can change the time period and click on the button again.")
-st.markdown("If you want to see more tracks, you can change the number of tracks and click on the button again.")
+# with col4:
+#     st.subheader("Medium Term")
+#     fig = px.sunburst(sb_df_mt_top, path=['genres', "artists"], values="count")
+#     fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+#     st.plotly_chart(fig, use_container_width=True)
+
+# with col5:
+#     st.subheader("Short Term")
+#     fig = px.sunburst(sb_df_st_top, path=['genres', "artists"], values="count")
+#     fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+#     st.plotly_chart(fig, use_container_width=True)
 
 
-big_tr_df_display = big_tr_df.drop("Track ID", axis=1)
-st.dataframe(big_tr_df_display)
-
-# Sunburst
-st.header("Sunburst")
-st.markdown("Here you can see a sunburst chart with your music taste.")
-st.markdown("The chart shows the genres you listen to and the artists that belong to each genre.")
-st.markdown("The size of the arcs represents the number of times you have listened to the genre or artist.")
-st.markdown("You can hover over the arcs to see the name of the genre or artist and the number of times you have listened to it.")
-st.markdown("You can also click on the legend to hide or show the genres or artists you want.")
-st.markdown("If you want to see the top artists of a different time period, you can change the time period and click on the button again.")
-st.markdown("If you want to see more artists, you can change the number of artists and click on the button again.")
-
-fig = px.sunburst(sb_df, path=['genres', "artists"], values="count")
-fig.update_layout(margin=dict(t=10, l=0, r=0, b=0), title={'text': "visualizing your music taste",'x': 0.5, 'y': 0.92})
-st.plotly_chart(fig)
 
 # '''tres opciones para solucionar problema de grafico crowdded
 # 1. graficar solo generos, sin artistas, tomar solo los 10 mas escuchados
