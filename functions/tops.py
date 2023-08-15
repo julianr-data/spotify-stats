@@ -18,13 +18,13 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 ## FAKE API CALLS ##
 
 def fake_API_call_top_artists():
-    with open("fake_api_calls/user_top_artist_long_term.json") as f:
+    with open("functions/fake_api_calls/user_top_artist_long_term.json") as f:
         fake_user_top_artists_long_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP ARTISTS LONG TERM ---")
-    with open("fake_api_calls/user_top_artist_medium_term.json") as f:
+    with open("functions/fake_api_calls/user_top_artist_medium_term.json") as f:
         fake_user_top_artists_medium_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP ARTISTS MEDIUM TERM ---")
-    with open("fake_api_calls/user_top_artist_short_term.json") as f:
+    with open("functions/fake_api_calls/user_top_artist_short_term.json") as f:
         fake_user_top_artists_short_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP ARTISTS SHORT TERM ---")
 
@@ -36,13 +36,13 @@ def fake_API_call_top_artists():
     return user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df
 
 def fake_API_call_top_tracks():
-    with open("fake_api_calls/user_top_tracks_long_term.json") as f:
+    with open("functions/fake_api_calls/user_top_tracks_long_term.json") as f:
         fake_user_top_tracks_long_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP TRACKS LONG TERM ---")
-    with open("fake_api_calls/user_top_tracks_medium_term.json") as f:
+    with open("functions/fake_api_calls/user_top_tracks_medium_term.json") as f:
         fake_user_top_tracks_medium_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP TRACKS MEDIUM TERM ---")
-    with open("fake_api_calls/user_top_tracks_short_term.json") as f:
+    with open("functions/fake_api_calls/user_top_tracks_short_term.json") as f:
         fake_user_top_tracks_short_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP TRACKS SHORT TERM ---")
 
