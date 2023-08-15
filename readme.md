@@ -2,6 +2,10 @@
 
 **Spotify User Data Analysis:** join with your credentials and check out a ton of metrics about your listening habits.
 
+![1](https://github.com/julianr-data/spotify-stats/assets/5545123/01d6b2ec-75d6-4b5e-a941-c08d5a72297a)
+
+![2](https://github.com/julianr-data/spotify-stats/assets/5545123/1df780c8-f936-4f33-b455-25d82d8226dd)
+
 [**CLICK HERE TO GO TO THE APP**](https://github.com/julianr-data/spotify-stats)
 
 This app uses the official [Spotify API](https://developer.spotify.com/documentation/web-api) to retrieve your user data. This comes with a number of side effects:
