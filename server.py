@@ -8,14 +8,17 @@ from IPython.display import display
 import plotly.express as px
 
 # FUNCTION IMPORTS
-from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart
+from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart, fake_API_call_top_artists, fake_API_call_top_tracks
 
 # These functions are called in app.py to run all logic behind the app:
 
 def top_art():
     ## 1. TOP ARTISTS ##
     # Retrieving data as dictionary from Spotify API ('dic'), turning it into three dataframes
-    user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = API_call_top_artists()
+    # user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = API_call_top_artists()
+
+    # FAKE API: Retrieving data as dictionary from FAKE API ('dic'), turning it into three dataframes
+    user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = fake_API_call_top_artists()
 
     # Merge dataframes into one big dataframe
     big_artists_df = merge_tops_into_big_df_by_id(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df)
@@ -28,7 +31,10 @@ def top_art():
 def top_songs():
     ## 2. TOP SONGS ##
     # Retrieving data as dictionary from Spotify API ('dic'), turning it into three dataframes
-    user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = API_call_top_tracks()
+    # user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = API_call_top_tracks()
+
+    # FAKE API: Retrieving data as dictionary from FAKE API ('dic'), turning it into three dataframes
+    user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = fake_API_call_top_tracks()
 
     # Merge dataframes into one big dataframe
     big_tracks_df = merge_tops_into_big_df_by_id(user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df, entity='track')
