@@ -18,11 +18,14 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 ## FAKE API CALLS ##
 
 def fake_API_call_top_artists():
-    fake_user_top_artists_long_term_dic = dict(json.read('user_top_artist_long_term.json'))
+    with open("fake_api_calls/user_top_artist_long_term.json") as f:
+        fake_user_top_artists_long_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP ARTISTS LONG TERM ---")
-    fake_user_top_artists_medium_term_dic = dict(json.read('user_top_artist_medium_term.json'))
+    with open("fake_api_calls/user_top_artist_medium_term.json") as f:
+        fake_user_top_artists_medium_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP ARTISTS MEDIUM TERM ---")
-    fake_user_top_artists_short_term_dic = dict(json.read('user_top_artist_short_term.json'))
+    with open("fake_api_calls/user_top_artist_short_term.json") as f:
+        fake_user_top_artists_short_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP ARTISTS SHORT TERM ---")
 
  # Create dataframes from dictionaries
@@ -33,21 +36,24 @@ def fake_API_call_top_artists():
     return user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df
 
 def fake_API_call_top_tracks():
-    user_top_tracks_long_term_dic = dict(json.read('user_top_tracks_long_term.json'))
+    with open("fake_api_calls/user_top_tracks_long_term.json") as f:
+        fake_user_top_tracks_long_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP TRACKS LONG TERM ---")
-    user_top_tracks_medium_term_dic = dict(json.read('user_top_tracks_medium_term.json'))
+    with open("fake_api_calls/user_top_tracks_medium_term.json") as f:
+        fake_user_top_tracks_medium_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP TRACKS MEDIUM TERM ---")
-    user_top_tracks_short_term_dic = dict(json.read('user_top_tracks_short_term.json'))
+    with open("fake_api_calls/user_top_tracks_short_term.json") as f:
+        fake_user_top_tracks_short_term_dic = json.load(f)
     print("\n--- FAKE API CALLED FOR TOP TRACKS SHORT TERM ---")
 
     # Create dataframes from dictionaries
-    user_top_tracks_long_term_df = user_top_tracks_into_df(user_top_tracks_long_term_dic)
-    user_top_tracks_medium_term_df = user_top_tracks_into_df(user_top_tracks_medium_term_dic)
-    user_top_tracks_short_term_df = user_top_tracks_into_df(user_top_tracks_short_term_dic)
+    user_top_tracks_long_term_df = user_top_tracks_into_df(fake_user_top_tracks_long_term_dic)
+    user_top_tracks_medium_term_df = user_top_tracks_into_df(fake_user_top_tracks_medium_term_dic)
+    user_top_tracks_short_term_df = user_top_tracks_into_df(fake_user_top_tracks_short_term_dic)
 
     return user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df
 
-## API CALLS ##
+## TRUE API CALLS ##
 
 def API_call_top_artists():
     '''Retrieving data in dictionary form from Spotify API ('dic')
