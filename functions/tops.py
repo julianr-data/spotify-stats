@@ -524,6 +524,7 @@ def sb_decades_data(df):
     - release date
     turn release date into datetime format'''
 
+
     dfres = df[["artist_name", "track_name", "album_release_date"]]
     dfres["album_release_date"] = pd.to_datetime(dfres["album_release_date"])
     print(dfres.dtypes)
