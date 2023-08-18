@@ -106,8 +106,6 @@ def API_call_top_tracks():
     # with open('user_top_tracks_short_term.json', 'w') as outfile:
     #     outfile.write(user_top_tracks_short_term_json)
 
-
-
     # Create dataframes from dictionaries
     user_top_tracks_long_term_df = user_top_tracks_into_df(user_top_tracks_long_term_dic)
     user_top_tracks_medium_term_df = user_top_tracks_into_df(user_top_tracks_medium_term_dic)
@@ -478,7 +476,6 @@ def top_releases_into_df(df):
     album_prevalence = album_prevalence.reset_index().rename(columns={'album_name': 'Album Name', 'count': 'Nº of songs in this period'}).drop('album_id', axis=1)
     return album_prevalence
 
-
 def top_tracks_vs_release_chart(df):
 
     df.rename(columns={"track_popularity": "Popularity", "album_release_date": "Release Date",
@@ -520,8 +517,32 @@ def top_tracks_vs_release_chart(df):
     #     columns={'album_name': 'Album', 'artist_name': 'Artist',
     #              'song_name': 'Tracks'}).drop_duplicates()
 
+def sb_decades_data(df):
+    '''Strip top track dataframes of everything except
+    - artist
+    - trackname
+    - release date
+    turn release date into datetime format'''
+
+    dfres = df[["artist_name", "track_name", "album_release_date"]]
+    dfres["album_release_date"] = pd.to_datetime(dfres["album_release_date"])
+    print(dfres.dtypes)
+    return dfres
 
 
+# MAIN for testing decades sunburst
+# t1, t2, t3 = (fake_API_call_top_tracks())
+# f1 = sb_decades_data(t1)
+# f2 = sb_decades_data(t2)
+# f3 = sb_decades_data(t3)
+# print(f1)
+# print("\n\n\n")
+# print(f2)
+# print("\n\n\n")
+# print(f3)
+# print("\n\n\n")
+
+# print(sb_decades_data())
 
 
 

@@ -8,7 +8,9 @@ from IPython.display import display
 import plotly.express as px
 
 # FUNCTION IMPORTS
-from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id, count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart, fake_API_call_top_artists, fake_API_call_top_tracks
+from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id,\
+    count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart, fake_API_call_top_artists,\
+    fake_API_call_top_tracks, sb_decades_data
 
 # These functions are called in app.py to run all logic behind the app:
 
@@ -42,7 +44,7 @@ def top_songs():
 
     return big_tracks_df, user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df
 
-def genre_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df):
+def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df):
     ## 3. GENRE ANALYSIS ##
     genre_count_lt = count_genres(user_top_artists_long_term_df)
     sb_df_lt = sb_data(user_top_artists_long_term_df, genre_count_lt)
@@ -58,6 +60,15 @@ def genre_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_d
 
     return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
 
+def decades_sb_analysis(longterm_df, mediumterm_df, shortterm_df):
+    ## 4. DECADES ANALYSIS ##
+    sb_df_lt_decades = sb_decades_data(longterm_df)
+    sb_df_mt_decades = sb_decades_data(mediumterm_df)
+    sb_df_st_decades = sb_decades_data(shortterm_df)
+
+    return sb_df_lt_decades, sb_df_mt_decades, sb_df_st_decades
+
+
 def top_releases(lt_tracks, mt_tracks, st_tracks):
     x = top_releases_into_df(lt_tracks)
     y = top_releases_into_df(mt_tracks)
@@ -71,10 +82,13 @@ def top_tracks_vs_release(lt_tracks, mt_tracks, st_tracks):
     return x, y, z
 
 
-
-
+# tempdfs = fake_API_call_top_tracks()
+# r1, r2, r3 = decades_sb_analysis(tempdfs[0], tempdfs[1], tempdfs[2])
+# print(r1, r2, r3)
+# print("\n\n\n")
 
 ## PRINTS IN TERMINAL FOR TESTING ##
+
 # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
 #     display(big_artists_df)
 

@@ -1,4 +1,4 @@
-from server import top_art, top_songs, genre_analysis, top_releases, top_tracks_vs_release
+from server import top_art, top_songs, genre_sb_analysis, top_releases, top_tracks_vs_release, decades_sb_analysis
 import streamlit as st
 import plotly.express as px
 import seaborn as sns
@@ -7,9 +7,12 @@ import pandas as pd
 # Dataframes from server.py
 big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artists ¦ WARNING: API CALLS ARE MADE HERE
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks ¦ WARNING: API CALLS ARE MADE HERE
-sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top = genre_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
+sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top = genre_sb_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
 top_rel_lt, top_rel_mt, top_rel_st = top_releases(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top releases
 tr_vs_date_lt, tr_vs_date_mt, tr_vs_date_st = top_tracks_vs_release(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top tracks vs release date
+lt_dec, mt_dec, st_dec = decades_sb_analysis(top_tr_lt_df, top_tr_mt_df, top_tr_st_df)
+
+print(lt_dec)
 
 # Define background image
 page_bg_img = f"""
@@ -66,17 +69,18 @@ with col2:
 
 st.markdown("""---""")
 
-# Sunburst, top albums, top songs vs. release date
+# Sunburst decades, top albums, top songs vs. release date
 chosen_time = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=True, label_visibility="hidden")
 
 
 if chosen_time == "All Time":
     col5, col6 = st.columns(2)
     with col5:
-        st.subheader(f"Genre Analysis ({chosen_time})")
-        fig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count")
-        fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.subheader(f"Prevalence of decades ({chosen_time})")
+        # st.dataframe(lt_dec)
+        # fig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count")
+        # fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+        # st.plotly_chart(fig, use_container_width=True)
     with col6:
         st.subheader(f"Most listened releases ({chosen_time})")
         st.write(top_rel_lt)
@@ -119,3 +123,11 @@ elif chosen_time == "Last Month":
     st.plotly_chart(tr_vs_date_st, use_container_width=True)
 
 st.markdown("""---""")
+
+
+# DEPRECATED: Sunburst genre analysis
+# with col5:
+#         st.subheader(f"Genre Analysis ({chosen_time})")
+#         fig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count")
+#         fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+#         st.plotly_chart(fig, use_container_width=True)
