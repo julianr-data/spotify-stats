@@ -478,13 +478,14 @@ def top_releases_into_df(df):
 
 def top_tracks_vs_release_chart(df):
 
-    df.rename(columns={"track_popularity": "Popularity", "album_release_date": "Release Date",
-                       "track_duration": "Track Lenght", "artist_name": "Artist",
-                       "track_name": "Track Name"}, inplace=True)
+    # DEPRECATED renaming columns as it complicate sother functions
+    # df.rename(columns={"track_popularity": "Popularity", "album_release_date": "Release Date",
+    #                    "track_duration": "Track Lenght", "artist_name": "Artist",
+    #                    "track_name": "Track Name"}, inplace=True)
 
-    bubfig = px.scatter(df, x="Release Date", y="Popularity",
-                        size="Track Lenght", color="Artist",
-                        hover_name="Track Name", size_max=30)
+    bubfig = px.scatter(df, x="album_release_date", y="track_popularity",
+                        size="track_duration", color="artist_name",
+                        hover_name="track_name", size_max=30)
 
     bubfig.update_layout(yaxis=dict(gridcolor='#53f34a'),
                     xaxis=dict(gridcolor='#000000'), plot_bgcolor='#232323',
@@ -499,6 +500,7 @@ def top_tracks_vs_release_chart(df):
     # update axis labels:
     bubfig.update_xaxes(title_text='Release Date')
     bubfig.update_yaxes(title_text='Current Popularity')
+    bubfig.update
     return bubfig
 
 
@@ -522,11 +524,26 @@ def sb_decades_data(df):
     - artist
     - trackname
     - release date
-    turn release date into datetime format'''
+    chop everything after year, then add decade column
+    deprecated: turn release date into datetime format. pandas doesn't seem to recognize iso8601 format correctly'''
 
+    print(df.columns)
 
     dfres = df[["artist_name", "track_name", "album_release_date"]]
-    dfres["album_release_date"] = pd.to_datetime(dfres["album_release_date"])
+
+    # leave only the first 4 characters of the album release date with a lambda function
+    dfres["album_release_date"] = dfres["album_release_date"].apply(lambda x: x[:4])
+
+    # change album release date column name to album release year
+    dfres.rename(columns={"album_release_date": "album_release_year"}, inplace=True)
+
+    # add decade column
+    dfres["album_release_decade"] = dfres["album_release_year"].apply(lambda x: x[:3] + "0s")
+
+    # deprecated:
+    # dfres["album_release_date"] = pd.to_datetime(dfres["album_release_date"], format="ISO8601")
+
+
     print(dfres.dtypes)
     return dfres
 

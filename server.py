@@ -82,11 +82,11 @@ def top_tracks_vs_release(lt_tracks, mt_tracks, st_tracks):
     return x, y, z
 
 
-tmpdf1, tmpdf2, tmpdf3 = fake_API_call_top_tracks()
+# tmpdf1, tmpdf2, tmpdf3 = fake_API_call_top_tracks()
 
-r1, r2, r3 = decades_sb_analysis(tmpdf1, tmpdf2, tmpdf3)
-print(r1, r2, r3)
-print("\n\n\n")
+# r1, r2, r3 = decades_sb_analysis(tmpdf1, tmpdf2, tmpdf3)
+# print(r1, r2, r3)
+# print("\n\n\n")
 
 ## PRINTS IN TERMINAL FOR TESTING ##
 
