@@ -23,17 +23,17 @@ print("Top tracks vs. top releases data calculated")
 lt_dec, mt_dec, st_dec = decades_sb_analysis(top_tr_lt_df, top_tr_mt_df, top_tr_st_df)
 print("Decades sunburns data calculated")
 
-# Define background image
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
-background-image: url("https://images.unsplash.com/photo-1629093033905-a6054f346660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80");
-background-size: 120%;
-background-position: top left;
-background-repeat: repeat;
-background-attachment: local;}}
+background: rgb(0,0,0);
+background: linear-gradient(93deg, rgba(0,0,0,1) 70%, rgba(29,185,84,1) 94%, rgba(30,215,96,1) 100%);}}
 </style>
 """
+
+
+
+
 
 
 # Page config
