@@ -1,4 +1,5 @@
-from server import top_art, top_songs, genre_sb_analysis, top_releases, top_tracks_vs_release, decades_sb_analysis
+from server import top_art, top_songs, genre_sb_analysis, top_releases,\
+    top_tracks_vs_release, decades_sb_analysis, genre_barchart_analysis
 import streamlit as st
 import plotly.express as px
 import seaborn as sns
@@ -13,6 +14,9 @@ print("Tracks api calls invoked from app")
 
 sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top = genre_sb_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Sunburst data
 print("Genre sunburst data calculated")
+
+gen_bc_lt, gen_bc_mt, gen_bc_st = genre_barchart_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Genre barchart data
+print("Genre barchart data calculated")
 
 top_rel_lt, top_rel_mt, top_rel_st = top_releases(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top releases
 print("Top releases data calculated")
@@ -92,6 +96,12 @@ if chosen_time == "All Time":
     with col6:
         st.subheader(f"Most listened releases ({chosen_time})")
         st.write(top_rel_lt)
+
+    st.markdown("""---""")
+
+    st.subheader(f"Genres ({chosen_time})")
+    genrechart_fig = px.pie(gen_bc_lt, values='count', names='genre', title='Genres')
+    st.plotly_chart(genrechart_fig, use_container_width=True)
 
     st.markdown("""---""")
     st.subheader(f"Top songs release date vs. current popularity ({chosen_time})")

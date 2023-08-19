@@ -576,6 +576,12 @@ def sb_decades_data(df, topyears):
     # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
     #     display(res)
 
+
+# MAIN for testing genres barchart
+t1, t2, t3 = (fake_API_call_top_artists())
+f1 = count_genres(t1)
+print(f1)
+
 # MAIN for testing decades sunburst
 # t1, t2, t3 = (fake_API_call_top_tracks())
 # f1 = sb_decades_format(t1)

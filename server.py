@@ -77,6 +77,21 @@ def decades_sb_analysis(longterm_df, mediumterm_df, shortterm_df):
 
     return sb_df_lt_decades, sb_df_mt_decades, sb_df_st_decades
 
+def genre_barchart_analysis(user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df):
+    ## 5. GENRE ANALYSIS ##
+    gc_series_lt = count_genres(user_top_tracks_long_term_df)
+    gc_series_mt = count_genres(user_top_tracks_medium_term_df)
+    gc_series_st = count_genres(user_top_tracks_short_term_df)
+
+    genre_count_lt = pd.DataFrame({'genre':gc_series_lt.index, 'count':gc_series_lt.values})
+    genre_count_mt = pd.DataFrame({'genre':gc_series_mt.index, 'count':gc_series_mt.values})
+    genre_count_st = pd.DataFrame({'genre':gc_series_st.index, 'count':gc_series_st.values})
+
+
+
+
+    return genre_count_lt, genre_count_mt, genre_count_st
+
 
 def top_releases(lt_tracks, mt_tracks, st_tracks):
     x = top_releases_into_df(lt_tracks)
