@@ -10,7 +10,7 @@ import plotly.express as px
 # FUNCTION IMPORTS
 from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id,\
     count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart, fake_API_call_top_artists,\
-    fake_API_call_top_tracks, sb_decades_data
+    fake_API_call_top_tracks, sb_decades_data, sb_decades_format, count_years
 
 # These functions are called in app.py to run all logic behind the app:
 
@@ -62,9 +62,18 @@ def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_ter
 
 def decades_sb_analysis(longterm_df, mediumterm_df, shortterm_df):
     ## 4. DECADES ANALYSIS ##
-    sb_df_lt_decades = sb_decades_data(longterm_df)
-    sb_df_mt_decades = sb_decades_data(mediumterm_df)
-    sb_df_st_decades = sb_decades_data(shortterm_df)
+
+    decades_formatted_lt = sb_decades_format(longterm_df)
+    decades_formatted_mt = sb_decades_format(mediumterm_df)
+    decades_formatted_st = sb_decades_format(shortterm_df)
+
+    yc_lt = count_years(decades_formatted_lt)
+    yc_mt = count_years(decades_formatted_mt)
+    yc_st = count_years(decades_formatted_st)
+
+    sb_df_lt_decades = sb_decades_data(decades_formatted_lt, yc_lt)
+    sb_df_mt_decades = sb_decades_data(decades_formatted_mt, yc_mt)
+    sb_df_st_decades = sb_decades_data(decades_formatted_st, yc_st)
 
     return sb_df_lt_decades, sb_df_mt_decades, sb_df_st_decades
 

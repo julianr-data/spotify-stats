@@ -85,8 +85,15 @@ chosen_time = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "La
 if chosen_time == "All Time":
     col5, col6 = st.columns(2)
     with col5:
-        st.subheader(f"Prevalence of decades ({chosen_time})")
+        st.subheader(f"Distribution of decades among top tracks ({chosen_time})")
+
         st.dataframe(lt_dec)
+
+        fig = px.sunburst(lt_dec, path=["decade", "year", "artist", "track"], values="count")
+        fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
+        st.plotly_chart(fig, use_container_width=True)
+
+
         # fig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count")
         # fig.update_layout(margin=dict(t=0, l=10, r=10, b=0))
         # st.plotly_chart(fig, use_container_width=True)

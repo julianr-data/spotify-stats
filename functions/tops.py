@@ -442,6 +442,16 @@ def count_genres(df):
     gcount = pd.Series(gcount).sort_values(ascending=False)
     return gcount
 
+def count_years(df):
+    year_count = {}
+    for year in df['album_release_year']:
+        if year not in year_count:
+            year_count[year] = 1
+        else:
+            year_count[year] += 1
+    year_count = pd.Series(year_count).sort_values(ascending=False)
+    return year_count
+
 def sb_data(df, topgenres):
     art, gen, count = [], [], []
     for index, row in df.iterrows():
@@ -519,7 +529,7 @@ def top_tracks_vs_release_chart(df):
     #     columns={'album_name': 'Album', 'artist_name': 'Artist',
     #              'song_name': 'Tracks'}).drop_duplicates()
 
-def sb_decades_data(df):
+def sb_decades_format(df):
     '''Strip top track dataframes of everything except
     - artist
     - trackname
@@ -540,27 +550,40 @@ def sb_decades_data(df):
     # add decade column
     dfres["album_release_decade"] = dfres["album_release_year"].apply(lambda x: x[:3] + "0s")
 
-    # deprecated:
+    # deprecated ISO8601 approach:
     # dfres["album_release_date"] = pd.to_datetime(dfres["album_release_date"], format="ISO8601")
 
 
     print(dfres.dtypes)
     return dfres
 
+def sb_decades_data(df, topyears):
+    tr, year, dec, art, count = [], [], [], [], []
+
+    for index, row in df.iterrows():
+        for y, value in zip(topyears.index, topyears.values):
+            if y in row["album_release_year"]:
+                art.append(row["artist_name"])
+                year.append(y)
+                count.append(value)
+                tr.append(row["track_name"])
+                dec.append(row["album_release_decade"])
+
+    res = pd.DataFrame({"track": tr, "year": year, "decade": dec, "artist": art, "count": count})
+
+    return res
+
+    # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
+    #     display(res)
 
 # MAIN for testing decades sunburst
 # t1, t2, t3 = (fake_API_call_top_tracks())
-# f1 = sb_decades_data(t1)
-# f2 = sb_decades_data(t2)
-# f3 = sb_decades_data(t3)
-# print(f1)
-# print("\n\n\n")
-# print(f2)
-# print("\n\n\n")
-# print(f3)
-# print("\n\n\n")
+# f1 = sb_decades_format(t1)
+# yc1 = count_years(f1)
+# dat = sb_decades_data(f1, yc1)
+# print("\n\nDAT:")
+# print(dat)
 
-# print(sb_decades_data())
 
 
 
