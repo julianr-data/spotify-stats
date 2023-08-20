@@ -1,4 +1,4 @@
-# LIBRARY IMPORTS
+### IMPORTS ###
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -7,15 +7,14 @@ from spotipy.oauth2 import SpotifyOAuth
 from IPython.display import display
 import plotly.express as px
 
-# FUNCTION IMPORTS
 from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id,\
     count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart, fake_API_call_top_artists,\
     fake_API_call_top_tracks, sb_decades_data, sb_decades_format, count_years
 
-# These functions are called in app.py to run all logic behind the app:
+### FUNCTIONS ###
 
-def top_art():
-    ## 1. TOP ARTISTS ##
+def top_art():  # || API CALL MADE HERE - SWITCH BETWEEN TRUE AND FAKE API ||
+
     # Retrieving data as dictionary from Spotify API ('dic'), turning it into three dataframes
     # user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = API_call_top_artists()
 
@@ -43,6 +42,24 @@ def top_songs():
     big_tracks_df.replace("-", np.nan, inplace=True)
 
     return big_tracks_df, user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df
+
+def top_art_table(df, period):
+    '''Take the big dataframe from top_art, with the artists ordered by user preference, and return a table concerning only the selected period'''
+
+    df = df[['Artist', 'All Time']] # Select only "All Time" and "Artist" columns
+    df.rename(columns={'All Time': 'Ranking'}, inplace=True) # Rename "All Time" column to "Ranking"
+    df = df.head(50)
+    df.sort_values(by=['Ranking'], inplace=True) # Sort by "Ranking"
+    df['Ranking'] = df['Ranking'].astype(int) # Change "Ranking" column to int
+
+    return df
+
+
+
+
+
+
+# REVIEW:::::::::
 
 def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df):
     ## 3. GENRE ANALYSIS ##
@@ -87,11 +104,7 @@ def genre_barchart_analysis(user_top_tracks_long_term_df, user_top_tracks_medium
     genre_count_mt = pd.DataFrame({'genre':gc_series_mt.index, 'count':gc_series_mt.values})
     genre_count_st = pd.DataFrame({'genre':gc_series_st.index, 'count':gc_series_st.values})
 
-
-
-
     return genre_count_lt, genre_count_mt, genre_count_st
-
 
 def top_releases(lt_tracks, mt_tracks, st_tracks):
     x = top_releases_into_df(lt_tracks)

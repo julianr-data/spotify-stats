@@ -5,7 +5,10 @@ import plotly.express as px
 import seaborn as sns
 import pandas as pd
 from server import top_art, top_songs, genre_sb_analysis, top_releases,\
-    top_tracks_vs_release, decades_sb_analysis, genre_barchart_analysis
+    top_tracks_vs_release, decades_sb_analysis, genre_barchart_analysis,\
+    top_art_table
+
+
 
 ### DATA FROM SERVER.PY ###
 
@@ -39,46 +42,68 @@ print("Decades sunburns data calculated")
 
 
 
+### PAGE CONFIGURATION ###
 
-# page_bg_img = f"""
-# <style>
-# [data-testid="stAppViewContainer"] > .main {{
-# background: rgb(0,0,0);
-# background: linear-gradient(93deg, rgba(0,0,0,1) 70%, rgba(29,185,84,1) 94%, rgba(30,215,96,1) 100%);}}
-# </style>
-# """
+# Streamlit page configuration
+st.set_page_config(page_title="Spotify Data Analysis",
+                   page_icon="frontend/tasti1-transp2.png",
+                   layout="wide", initial_sidebar_state="expanded",
+                   menu_items={"Report a bug": "https://github.com/julianr-data/spotify-stats",
+                               "About": "https://github.com/julianr-data/spotify-stats"})
 
+# Background image CSS
+page_bg_img = f"""<style>[data-testid="stAppViewContainer"] > .main {{
+background: rgb(0,0,0);background: linear-gradient(93deg,
+rgba(0,0,0,1) 70%, rgba(29,185,84,1) 94%, rgba(30,215,96,1) 100%);}}
+</style>"""
 
-
-
-
-
-# # Page config
-# st.set_page_config(page_title="Spotify Data Analysis",
-#                    page_icon="frontend/tasti1-transp2.png",
-#                    layout="wide", initial_sidebar_state="expanded",
-#                    menu_items={"Report a Bug": "https://github.com/julianr-data/spotify-stats",
-#                                "About": "https://github.com/julianr-data/spotify-stats"})
+# Set background image
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
-# # Set background image
-# st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# # Sidebar
-# st.sidebar.image("frontend/tasti1-transp3.png")
-# st.sidebar.title("Visualize your music taste")
 
-# st.sidebar.markdown("Get an analysis of your Spotify listening habits: top artists, songs, genres, saved items, etc. with colorful charts and graphs.", unsafe_allow_html=True)
-# st.sidebar.markdown("To use this app, you need to have a Spotify account. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).", unsafe_allow_html=True)
-# st.sidebar.markdown("Your listening data comes from the [Spotify API](https://developer.spotify.com/documentation/web-api/).", unsafe_allow_html=True)
+### SIDEBAR ###
 
-# st.sidebar.markdown("© 2023 | Created by [Julián Rodríguez](https://www.linkedin.com/in/julianr-data/)")
-# st.sidebar.markdown("[Contact me](https://www.linkedin.com/in/julianr-data/) if you have any questions!")
-# st.sidebar.markdown("The code for this app can be found [here](https://github.com/julianr-data/spotify-stats)")
+st.sidebar.image("frontend/tasti1-transp3.png")
+st.sidebar.title("Visualize your music taste")
 
-# # Main page
-# st.title("Spotify Data Analysis")
-# st.markdown("""---""")
+st.sidebar.markdown("Get an analysis of your Spotify listening habits: top artists, songs, genres, saved items, etc. with colorful charts and graphs.", unsafe_allow_html=True)
+st.sidebar.markdown("To use this app, you need to have a Spotify account. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).", unsafe_allow_html=True)
+st.sidebar.markdown("Your data comes from the [Spotify API](https://developer.spotify.com/documentation/web-api/).", unsafe_allow_html=True)
+
+st.sidebar.markdown("The code for this app can be found [here](https://github.com/julianr-data/spotify-stats). [Contact me](https://www.linkedin.com/in/julianr-data/) if you have any questions!")
+st.sidebar.markdown("V 0.3 | ©2023 | Created by [Julián Rodríguez](https://www.linkedin.com/in/julianr-data/)")
+
+
+
+### MAIN PAGE ###
+
+# Title and time frame selection
+col1a, col1b = st.columns(2)
+with col1a:
+    st.title("Spotify Data Analysis")
+with col1b:
+    timeframe = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
+st.markdown("""---""")
+
+# ALL TIME #
+# if timeframe == "All Time":
+
+top_art = top_art_table(big_art_df, "All Time")
+
+
+st.dataframe(top_art, use_container_width = False)
+st.dataframe(top_art.style.hide(axis="index"))
+st.markdown(top_art(axis="index").to_html(), unsafe_allow_html=True)
+
+
+
+
+
+
+
+
 
 # # Top artists & tracks
 # col1, col2 = st.columns(2)
