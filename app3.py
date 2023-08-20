@@ -65,6 +65,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 
 ### SIDEBAR ###
 
+st.sidebar.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
 st.sidebar.image("frontend/tasti1-transp3.png")
 st.sidebar.title("Visualize your music taste")
 
@@ -80,11 +81,12 @@ st.sidebar.markdown("V 0.3 | ©2023 | Created by [Julián Rodríguez](https://ww
 ### MAIN PAGE ###
 
 # Title and time frame selection
-col1a, col1b = st.columns(2)
+col1a, col1b = st.columns([0.2,1.2])
 with col1a:
-    st.title("Spotify Data Analysis")
+    timeframe = "asd"
+    # timeframe = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
 with col1b:
-    timeframe = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
+    st.title(f"Spotify Data Analysis: {timeframe}")
 st.markdown("""---""")
 
 # ALL TIME #
@@ -92,10 +94,12 @@ st.markdown("""---""")
 
 top_art = top_art_table(big_art_df, "All Time")
 
-
-st.dataframe(top_art, use_container_width = False)
-st.dataframe(top_art.style.hide(axis="index"))
-st.markdown(top_art(axis="index").to_html(), unsafe_allow_html=True)
+col2a, col2b = st.columns(2)
+with col2a:
+    st.subheader("Top Artists")
+    st.dataframe(top_art, use_container_width = True)
+with col2b:
+    st.write("placeholder")
 
 
 

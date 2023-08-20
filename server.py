@@ -46,11 +46,19 @@ def top_songs():
 def top_art_table(df, period):
     '''Take the big dataframe from top_art, with the artists ordered by user preference, and return a table concerning only the selected period'''
 
-    df = df[['Artist', 'All Time']] # Select only "All Time" and "Artist" columns
-    df.rename(columns={'All Time': 'Ranking'}, inplace=True) # Rename "All Time" column to "Ranking"
+    df = df[['Artist', period]] # Select only PERIOD and "Artist" columns
+    df.sort_values(by=[period], inplace=True, ascending=True) # Sort by selected period
+    df.index.name = 'Ranking' # Rename index to "Ranking"
+    df.index += 1 # Have index start from 1
     df = df.head(50)
-    df.sort_values(by=['Ranking'], inplace=True) # Sort by "Ranking"
-    df['Ranking'] = df['Ranking'].astype(int) # Change "Ranking" column to int
+    df = df[["Artist"]]
+
+
+
+    # df.rename(columns={'All Time': 'Ranking'}, inplace=True) # Rename "All Time" column to "Ranking"
+    # df = df.head(50)
+    # df.sort_values(by=['Ranking'], inplace=True) # Sort by "Ranking"
+    # df['Ranking'] = df['Ranking'].astype(int) # Change "Ranking" column to int
 
     return df
 
