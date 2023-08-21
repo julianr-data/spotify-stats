@@ -6,10 +6,11 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from IPython.display import display
 import plotly.express as px
+import wordcloud
 
 from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops_into_big_df_by_id,\
     count_genres, sb_data, top_releases_into_df, top_tracks_vs_release_chart, fake_API_call_top_artists,\
-    fake_API_call_top_tracks, sb_decades_data, sb_decades_format, count_years
+    fake_API_call_top_tracks, sb_decades_data, sb_decades_format, count_years, genres_into_string
 
 ### FUNCTIONS ###
 
@@ -62,7 +63,17 @@ def top_art_table(df, period):
 
     return df
 
+def wcloud(df_lt, df_mt, df_st):
 
+    text_lt = genres_into_string(df_lt)
+    text_mt = genres_into_string(df_mt)
+    text_st = genres_into_string(df_st)
+
+    wcloud_lt = wordcloud.WordCloud(width=450, height=400, max_words=50, background_color="black").generate(text_lt)
+    wcloud_mt = wordcloud.WordCloud(width=450, height=400, max_words=50, background_color="black").generate(text_mt)
+    wcloud_st = wordcloud.WordCloud(width=450, height=400, max_words=50, background_color="black").generate(text_st)
+
+    return wcloud_lt, wcloud_mt, wcloud_st
 
 
 

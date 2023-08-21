@@ -4,9 +4,13 @@ import streamlit as st
 import plotly.express as px
 import seaborn as sns
 import pandas as pd
+import wordcloud
+
 from server import top_art, top_songs, genre_sb_analysis, top_releases,\
     top_tracks_vs_release, decades_sb_analysis, genre_barchart_analysis,\
-    top_art_table
+    top_art_table, wcloud
+
+
 
 
 
@@ -28,6 +32,9 @@ print("Top genres sunburst data calculated")
 
 gen_bc_lt, gen_bc_mt, gen_bc_st = genre_barchart_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Genre barchart
 print("Top genres barchart data calculated")
+
+wc_lt, wc_mt, wc_st = wcloud(top_art_lt_df, top_art_mt_df, top_art_st_df) # Wordcloud
+print("Wordcloud data generated")
 
 # TOP RELEASES #
 top_rel_lt, top_rel_mt, top_rel_st = top_releases(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top releases
@@ -65,9 +72,9 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 
 ### SIDEBAR ###
 
-st.sidebar.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
 st.sidebar.image("frontend/tasti1-transp3.png")
 st.sidebar.title("Visualize your music taste")
+timeframe = st.sidebar.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
 
 st.sidebar.markdown("Get an analysis of your Spotify listening habits: top artists, songs, genres, saved items, etc. with colorful charts and graphs.", unsafe_allow_html=True)
 st.sidebar.markdown("To use this app, you need to have a Spotify account. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).", unsafe_allow_html=True)
@@ -80,13 +87,12 @@ st.sidebar.markdown("V 0.3 | ©2023 | Created by [Julián Rodríguez](https://ww
 
 ### MAIN PAGE ###
 
-# Title and time frame selection
-col1a, col1b = st.columns([0.2,1.2])
+# Title
+col1a, col1b = st.columns([0.7, 0.6], gap="small")
 with col1a:
-    timeframe = "asd"
-    # timeframe = st.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
+    st.title(f"Your Spotify data analysis:")
 with col1b:
-    st.title(f"Spotify Data Analysis: {timeframe}")
+    st.title(f"{timeframe}")
 st.markdown("""---""")
 
 # ALL TIME #
@@ -94,13 +100,17 @@ st.markdown("""---""")
 
 top_art = top_art_table(big_art_df, "All Time")
 
-col2a, col2b = st.columns(2)
+col2a, col2b, col2c  = st.columns([0.45, 0.1, 0.45], gap="small")
 with col2a:
     st.subheader("Top Artists")
     st.dataframe(top_art, use_container_width = True)
 with col2b:
-    st.write("placeholder")
-
+    # Just to create space
+    pass
+with col2c:
+    st.subheader("Most listened to genres")
+    wcimage = wc_lt.to_image() # create an image for the wordcloud
+    st.image(wcimage, use_column_width=True) # display the image in the streamlit app
 
 
 

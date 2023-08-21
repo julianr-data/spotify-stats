@@ -452,6 +452,22 @@ def count_years(df):
     year_count = pd.Series(year_count).sort_values(ascending=False)
     return year_count
 
+def genres_into_string(df):
+    '''Function to turn list of genres into a string'''
+    text = ""
+
+    for index, row in df.iterrows():
+        if row["genres"] == "Series([], )":
+            df.at[index, "genres"] = "Uncategorized"
+
+    # for each row, if genre is different from uncategorized, add it to the string
+    for index, row in df.iterrows():
+        if row["genres"] != "Uncategorized":
+            addition = row["genres"]
+            addition = " ".join(addition) # addition is a list, turning it into a string separated by spaces
+            text += addition + " "
+    return text
+
 def sb_data(df, topgenres):
     art, gen, count = [], [], []
     for index, row in df.iterrows():
@@ -577,10 +593,17 @@ def sb_decades_data(df, topyears):
     #     display(res)
 
 
+# MAIN for testing genres into string
+# t1, t2, t3 = (fake_API_call_top_artists())
+# f1 = genres_into_string(t1)
+# f1 = f1[["artist_name", "genres"]]
+# print(f1)
+
+
 # MAIN for testing genres barchart
-t1, t2, t3 = (fake_API_call_top_artists())
-f1 = count_genres(t1)
-print(f1)
+# t1, t2, t3 = (fake_API_call_top_artists())
+# f1 = count_genres(t1)
+# print(f1)
 
 # MAIN for testing decades sunburst
 # t1, t2, t3 = (fake_API_call_top_tracks())
