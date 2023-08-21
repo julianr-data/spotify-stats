@@ -17,10 +17,10 @@ from functions.tops import API_call_top_artists, API_call_top_tracks, merge_tops
 def top_art():  # || API CALL MADE HERE - SWITCH BETWEEN TRUE AND FAKE API ||
 
     # Retrieving data as dictionary from Spotify API ('dic'), turning it into three dataframes
-    # user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = API_call_top_artists()
+    user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = API_call_top_artists()
 
     # FAKE API: Retrieving data as dictionary from FAKE API ('dic'), turning it into three dataframes
-    user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = fake_API_call_top_artists()
+    # user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df = fake_API_call_top_artists()
 
     # Merge dataframes into one big dataframe
     big_artists_df = merge_tops_into_big_df_by_id(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df)
@@ -30,13 +30,13 @@ def top_art():  # || API CALL MADE HERE - SWITCH BETWEEN TRUE AND FAKE API ||
 
     return big_artists_df, user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df
 
-def top_songs():
+def top_songs():  # || API CALL MADE HERE - SWITCH BETWEEN TRUE AND FAKE API ||
     ## 2. TOP SONGS ##
     # Retrieving data as dictionary from Spotify API ('dic'), turning it into three dataframes
-    # user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = API_call_top_tracks()
+    user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = API_call_top_tracks()
 
     # FAKE API: Retrieving data as dictionary from FAKE API ('dic'), turning it into three dataframes
-    user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = fake_API_call_top_tracks()
+    # user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df = fake_API_call_top_tracks()
 
     # Merge dataframes into one big dataframe
     big_tracks_df = merge_tops_into_big_df_by_id(user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df, entity='track')
