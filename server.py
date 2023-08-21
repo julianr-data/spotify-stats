@@ -44,22 +44,22 @@ def top_songs():
 
     return big_tracks_df, user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df
 
-def top_art_table(df, period):
-    '''Take the big dataframe from top_art, with the artists ordered by user preference, and return a table concerning only the selected period'''
+def top_art_tr_table(df, period, element):
+    '''Take the big dataframe from top_art or top_songs,
+    with the artists/tracks ordered by user preference,
+    and return a table concerning only the selected period'''
 
-    df = df[['Artist', period]] # Select only PERIOD and "Artist" columns
+    if element == "art":
+        element = "Artist"
+    else :
+        element = "Track"
+
+    df = df[[element, period]] # Select only PERIOD and "Artist" columns
     df.sort_values(by=[period], inplace=True, ascending=True) # Sort by selected period
     df.index.name = 'Ranking' # Rename index to "Ranking"
     df.index += 1 # Have index start from 1
     df = df.head(50)
-    df = df[["Artist"]]
-
-
-
-    # df.rename(columns={'All Time': 'Ranking'}, inplace=True) # Rename "All Time" column to "Ranking"
-    # df = df.head(50)
-    # df.sort_values(by=['Ranking'], inplace=True) # Sort by "Ranking"
-    # df['Ranking'] = df['Ranking'].astype(int) # Change "Ranking" column to int
+    df = df[[element]]
 
     return df
 

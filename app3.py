@@ -8,7 +8,7 @@ import wordcloud
 
 from server import top_art, top_songs, genre_sb_analysis, top_releases,\
     top_tracks_vs_release, decades_sb_analysis, genre_barchart_analysis,\
-    top_art_table, wcloud
+    top_art_tr_table, wcloud
 
 
 
@@ -96,7 +96,8 @@ st.markdown("""---""")
 # ALL TIME #
 # if timeframe == "All Time":
 
-top_art = top_art_table(big_art_df, "All Time")
+top_art = top_art_tr_table(big_art_df, "All Time", "art")
+toptr = top_art_tr_table(big_tr_df, "All Time", "tr")
 
 col2a, col2b, col2c  = st.columns([0.45, 0.1, 0.45], gap="small")
 with col2a:
@@ -114,20 +115,36 @@ st.markdown("")
 st.markdown("")
 
 col3a, col3b, col3c = st.columns([0.45, 0.1, 0.45], gap="small")
-with col3a:
+with col3c:
     st.subheader("Top tracks")
-    st.dataframe(top_art, use_container_width = True)
+    st.dataframe(toptr, use_container_width = True)
 with col3b:
     # Just to create space
     pass
-with col3c:
+with col3a:
     st.write("")
-    st.subheader("Genre Analysis (detail)")
+    st.subheader("Genre analysis (detail)")
     sbfig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count", color="count",
                 hover_data=['genres'],
                 color_continuous_scale='Emrld')
     sbfig.update_layout(margin=dict(t=0, l=10, r=10, b=10))
     st.plotly_chart(sbfig, use_container_width=True)
+
+col4a, col4b, col4c = st.columns([0.45, 0.1, 0.45], gap="small")
+
+with col4c:
+    st.subheader("Top Decades")
+    decadesbar = px.bar(lt_dec, x="decade", y="count", color="decade", color_discrete_sequence=px.colors.qualitative.Pastel,
+                        labels={'decade':'Decades', "count": "Nº of songs"}, height=400)
+    st.plotly_chart(decadesbar, use_container_width=True)
+
+with col4b:
+    # Just to create space
+    pass
+with col4a:
+    st.subheader("Top releases")
+    st.dataframe(top_rel_lt, use_container_width = True)
+
 
 
 
