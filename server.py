@@ -54,8 +54,9 @@ def top_table_noindex(df, period, element):
     else :
         element = "Track"
 
-    df = df[[element, period]] # Select only PERIOD and "Artist" columns
+    df = df[[element, period]] # Select only period and element columns
     df.sort_values(by=[period], inplace=True, ascending=True) # Sort by selected period
+    df.reset_index(inplace=True) # Reset index
     df.index.name = 'Ranking' # Rename index to "Ranking"
     df.index += 1 # Have index start from 1
     df = df.head(50)
@@ -89,7 +90,10 @@ def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_ter
     sb_df_st = sb_data(user_top_artists_short_term_df, genre_count_st)
     sb_df_st_top = sb_df_st.head(40)
 
-    return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
+    # return: position 0, 1, 2 are lt, mt, st respectively.
+    # s3 is None too be consistent with the other functions.
+    # 4, 5, 6 are the top 40 of each period
+    return sb_df_lt, sb_df_mt, sb_df_st, None, sb_df_lt_top, sb_df_mt_top, sb_df_st_top
 
 def tinker_bigdfs_fordisplay(df, entity):
     try:
@@ -114,10 +118,6 @@ def top_tracks_vs_release(lt_tracks, mt_tracks, st_tracks):
     z = top_tracks_vs_release_chart(st_tracks)
     return x, y, z
 
-
-# REVIEW:::::::::
-
-
 def decades_sb_analysis(longterm_df, mediumterm_df, shortterm_df):
     ## 4. DECADES ANALYSIS ##
 
@@ -134,6 +134,9 @@ def decades_sb_analysis(longterm_df, mediumterm_df, shortterm_df):
     sb_df_st_decades = sb_decades_data(decades_formatted_st, yc_st)
 
     return sb_df_lt_decades, sb_df_mt_decades, sb_df_st_decades
+
+
+# REVIEW:::::::::
 
 def genre_barchart_analysis(user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df):
     ## 5. GENRE ANALYSIS ##
