@@ -18,6 +18,7 @@ from server import top_art, top_songs, genre_sb_analysis, top_releases,\
 
 # API CALLS ARE MADE HERE #
 big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artists
+top_art_list = [top_art_lt_df, top_art_mt_df, top_art_st_df, big_art_df] # long term is 0, medium term is 1, short term is 2, big is 3
 print("Top artists API calls invoked from server")
 
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks
@@ -38,6 +39,8 @@ print("Top genres barchart data calculated")
 
 # new wc attempt
 wc_lt, wc_mt, wc_st = wcloud(top_art_lt_df, top_art_mt_df, top_art_st_df) # Wordcloud
+# zip wc_lt, wc_mt, wc_st into a list:
+wc_list = [wc_lt, wc_mt, wc_st]
 print("Wordcloud new style data generated")
 
 
@@ -79,6 +82,12 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 st.sidebar.image("frontend/app3-logo-whiteltter-transparent-narrow.png")
 st.sidebar.title("Visualize your music taste")
 timeframe = st.sidebar.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
+if timeframe == "All Time":
+    tfx = 0
+elif timeframe == "Last 6 Months":
+    tfx = 1
+elif timeframe == "Last Month":
+    tfx = 2
 
 st.sidebar.markdown("Get an analysis of your Spotify listening habits: top artists, songs, genres, saved items, etc. with colorful charts and graphs.", unsafe_allow_html=True)
 st.sidebar.markdown("To use this app, you need to have a Spotify account. If you don't have an account, you can create one [here](https://www.spotify.com/signup/).", unsafe_allow_html=True)
@@ -99,11 +108,9 @@ with col1b:
     st.title(f"{timeframe}")
 st.markdown("""---""")
 
-# ALL TIME #
-# if timeframe == "All Time":
 
-top_art = top_table_noindex(big_art_df, "All Time", "art")
-toptr = top_table_noindex(big_tr_df, "All Time", "tr")
+top_art = top_table_noindex(big_art_df, timeframe, "art")
+toptr = top_table_noindex(big_tr_df, timeframe, "tr")
 
 col2a, col2b, col2c  = st.columns([0.45, 0.1, 0.45], gap="small")
 with col2a:
@@ -114,7 +121,7 @@ with col2b:
     pass
 with col2c:
     st.subheader("Top genres")
-    wcimage = wc_lt.to_image() # create an image for the wordcloud
+    wcimage = wc_list[tfx].to_image() # create an image for the wordcloud
     st.image(wcimage, use_column_width=True) # display the image in the streamlit app
 
 st.markdown("")
