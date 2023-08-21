@@ -100,15 +100,36 @@ top_art = top_art_table(big_art_df, "All Time")
 
 col2a, col2b, col2c  = st.columns([0.45, 0.1, 0.45], gap="small")
 with col2a:
-    st.subheader("Top Artists")
+    st.subheader("Top artists")
     st.dataframe(top_art, use_container_width = True)
 with col2b:
     # Just to create space
     pass
 with col2c:
-    st.subheader("Most listened to genres")
+    st.subheader("Top genres")
     wcimage = wc_lt.to_image() # create an image for the wordcloud
     st.image(wcimage, use_column_width=True) # display the image in the streamlit app
+
+st.markdown("")
+st.markdown("")
+
+col3a, col3b, col3c = st.columns([0.45, 0.1, 0.45], gap="small")
+with col3a:
+    st.subheader("Top tracks")
+    st.dataframe(top_art, use_container_width = True)
+with col3b:
+    # Just to create space
+    pass
+with col3c:
+    st.write("")
+    st.subheader("Genre Analysis (detail)")
+    sbfig = px.sunburst(sb_df_lt_top, path=['genres', "artists"], values="count", color="count",
+                hover_data=['genres'],
+                color_continuous_scale='Emrld')
+    sbfig.update_layout(margin=dict(t=0, l=10, r=10, b=10))
+    st.plotly_chart(sbfig, use_container_width=True)
+
+
 
 
 

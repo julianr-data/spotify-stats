@@ -75,26 +75,26 @@ def wcloud(df_lt, df_mt, df_st):
 
     return wcloud_lt, wcloud_mt, wcloud_st
 
+def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df):
+    ## 3. GENRE ANALYSIS ##
+    genre_count_lt = count_genres(user_top_artists_long_term_df)
+    sb_df_lt = sb_data(user_top_artists_long_term_df, genre_count_lt)
+    sb_df_lt_top = sb_df_lt.head(40)
+
+    genre_count_mt = count_genres(user_top_artists_medium_term_df)
+    sb_df_mt = sb_data(user_top_artists_medium_term_df, genre_count_mt)
+    sb_df_mt_top = sb_df_mt.head(40)
+
+    genre_count_st = count_genres(user_top_artists_short_term_df)
+    sb_df_st = sb_data(user_top_artists_short_term_df, genre_count_st)
+    sb_df_st_top = sb_df_st.head(40)
+
+    return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
 
 
 
 # REVIEW:::::::::
 
-def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_term_df, user_top_artists_short_term_df):
-    ## 3. GENRE ANALYSIS ##
-    genre_count_lt = count_genres(user_top_artists_long_term_df)
-    sb_df_lt = sb_data(user_top_artists_long_term_df, genre_count_lt)
-    sb_df_lt_top = sb_df_lt.head(20)
-
-    genre_count_mt = count_genres(user_top_artists_medium_term_df)
-    sb_df_mt = sb_data(user_top_artists_medium_term_df, genre_count_mt)
-    sb_df_mt_top = sb_df_mt.head(20)
-
-    genre_count_st = count_genres(user_top_artists_short_term_df)
-    sb_df_st = sb_data(user_top_artists_short_term_df, genre_count_st)
-    sb_df_st_top = sb_df_st.head(20)
-
-    return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
 
 def decades_sb_analysis(longterm_df, mediumterm_df, shortterm_df):
     ## 4. DECADES ANALYSIS ##
