@@ -62,7 +62,7 @@ print("Decades sunburns data calculated")
 
 # Streamlit page configuration
 st.set_page_config(page_title="Spotify Data Analysis",
-                   page_icon="frontend/tasti1-transp2.png",
+                   page_icon="frontend/app3-logo-blackfontfont-transp-short.png",
                    layout="wide", initial_sidebar_state="expanded",
                    menu_items={"Report a bug": "https://github.com/julianr-data/spotify-stats",
                                "About": "https://github.com/julianr-data/spotify-stats"})
@@ -79,7 +79,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 
 ### SIDEBAR ###
 
-st.sidebar.image("frontend/app3-logo-whiteltter-transparent-narrow.png")
+st.sidebar.image("frontend/app3-logo-whitefont-transp-short.png")
 st.sidebar.title("Visualize your music taste")
 timeframe = st.sidebar.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
 if timeframe == "All Time":

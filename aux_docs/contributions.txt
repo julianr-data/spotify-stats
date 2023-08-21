@@ -6,9 +6,11 @@ improved tops merging function to work by id instead of name, avoiding issues wh
 functions to cat dataframes to csv and to terminal to check correct data flow
 re-did top genres in 3 periods function, attemtpting to take genre from song first, and if not sucessfull, then from artist, to reflect more precisely the genres the listener favours
 created and adapted sunburst chart functions
+added decades barchart function
+added single period top lists to make it less confusing, but kept multi version at the end for comparison
+added current popularity vs most listened songs vs lenght
 
-
-changed top albums logic: now its by period
+changed top albums logic: now its by single period
 
 frontend in streamlit, so I re-did it
 

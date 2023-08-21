@@ -151,8 +151,9 @@ def genre_barchart_analysis(user_top_tracks_long_term_df, user_top_tracks_medium
     return genre_count_lt, genre_count_mt, genre_count_st
 
 
-# tmpdf1, tmpdf2, tmpdf3 = fake_API_call_top_tracks()
+## MAIN FOR TESTING ##
 
+# tmpdf1, tmpdf2, tmpdf3 = fake_API_call_top_tracks()
 # r1, r2, r3 = decades_sb_analysis(tmpdf1, tmpdf2, tmpdf3)
 # print(r1, r2, r3)
 # print("\n\n\n")
