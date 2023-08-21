@@ -44,7 +44,7 @@ def top_songs():
 
     return big_tracks_df, user_top_tracks_long_term_df, user_top_tracks_medium_term_df, user_top_tracks_short_term_df
 
-def top_art_tr_table(df, period, element):
+def top_table_noindex(df, period, element):
     '''Take the big dataframe from top_art or top_songs,
     with the artists/tracks ordered by user preference,
     and return a table concerning only the selected period'''

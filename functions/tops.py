@@ -499,7 +499,7 @@ def top_releases_into_df(df):
     count = count_top_albums(df)
     album_names = df.set_index('album_id')["album_name"].to_frame()
     album_prevalence = album_names.merge(count.rename('count'), left_index=True, right_index=True).drop_duplicates().sort_values(by='count', ascending=False).head(20)
-    album_prevalence = album_prevalence.reset_index().rename(columns={'album_name': 'Album Name', 'count': 'Nº of songs in this period'}).drop('album_id', axis=1)
+    album_prevalence = album_prevalence.reset_index().rename(columns={'album_name': 'Album Name', 'count': '# songs in this period'}).drop('album_id', axis=1)
     return album_prevalence
 
 def top_tracks_vs_release_chart(df):
