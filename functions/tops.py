@@ -1,6 +1,6 @@
 # IMPORTS
 import numpy as np
-import pandas as pd
+import pandas as pd +
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from IPython.display import display
@@ -20,13 +20,13 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 def fake_API_call_top_artists():
     with open("functions/fake_api_calls/user_top_artist_long_term.json") as f:
         fake_user_top_artists_long_term_dic = json.load(f)
-    print("\n--- FAKE API CALLED FOR TOP ARTISTS LONG TERM ---")
+    print("--- FAKE API CALLED FOR TOP ARTISTS LONG TERM ---\n")
     with open("functions/fake_api_calls/user_top_artist_medium_term.json") as f:
         fake_user_top_artists_medium_term_dic = json.load(f)
-    print("\n--- FAKE API CALLED FOR TOP ARTISTS MEDIUM TERM ---")
+    print("--- FAKE API CALLED FOR TOP ARTISTS MEDIUM TERM ---\n")
     with open("functions/fake_api_calls/user_top_artist_short_term.json") as f:
         fake_user_top_artists_short_term_dic = json.load(f)
-    print("\n--- FAKE API CALLED FOR TOP ARTISTS SHORT TERM ---")
+    print("--- FAKE API CALLED FOR TOP ARTISTS SHORT TERM ---\n")
 
  # Create dataframes from dictionaries
     user_top_artists_long_term_df = user_top_artists_into_df(fake_user_top_artists_long_term_dic)
@@ -38,13 +38,13 @@ def fake_API_call_top_artists():
 def fake_API_call_top_tracks():
     with open("functions/fake_api_calls/user_top_tracks_long_term.json") as f:
         fake_user_top_tracks_long_term_dic = json.load(f)
-    print("\n--- FAKE API CALLED FOR TOP TRACKS LONG TERM ---")
+    print("--- FAKE API CALLED FOR TOP TRACKS LONG TERM ---\n")
     with open("functions/fake_api_calls/user_top_tracks_medium_term.json") as f:
         fake_user_top_tracks_medium_term_dic = json.load(f)
-    print("\n--- FAKE API CALLED FOR TOP TRACKS MEDIUM TERM ---")
+    print("--- FAKE API CALLED FOR TOP TRACKS MEDIUM TERM ---\n")
     with open("functions/fake_api_calls/user_top_tracks_short_term.json") as f:
         fake_user_top_tracks_short_term_dic = json.load(f)
-    print("\n--- FAKE API CALLED FOR TOP TRACKS SHORT TERM ---")
+    print("--- FAKE API CALLED FOR TOP TRACKS SHORT TERM ---\n")
 
     # Create dataframes from dictionaries
     user_top_tracks_long_term_df = user_top_tracks_into_df(fake_user_top_tracks_long_term_dic)
@@ -59,11 +59,11 @@ def API_call_top_artists():
     '''Retrieving data in dictionary form from Spotify API ('dic')
     Transforming data into dataframes, returning dataframes for long, medium and short term top artists'''
     user_top_artists_long_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='long_term') # dictionary of user top artists
-    print("\n--- API CALLED FOR TOP ARTISTS LONG TERM ---")
+    print("--- API CALLED FOR TOP ARTISTS LONG TERM ---\n")
     user_top_artists_medium_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='medium_term')
-    print("\n--- API CALLED FOR TOP ARTISTS MEDIUM TERM ---")
+    print("--- API CALLED FOR TOP ARTISTS MEDIUM TERM ---\n")
     user_top_artists_short_term_dic = sp.current_user_top_artists(limit=50, offset=0, time_range='short_term')
-    print("\n--- API CALLED FOR TOP ARTISTS SHORT TERM ---")
+    print("--- API CALLED FOR TOP ARTISTS SHORT TERM ---\n")
 
     # # Temp json write for fake api call
     # user_top_artist_long_term_json = json.dumps(user_top_artists_long_term_dic)
@@ -88,11 +88,11 @@ def API_call_top_tracks():
     '''Retrieving data in dictionary form from Spotify API ('dic')
     Transforming data into dataframes, returning dataframes for long, medium and short term top tracks'''
     user_top_tracks_long_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='long_term') # dictionary of user top tracks
-    print("\n--- API CALLED FOR TOP TRACKS LONG TERM ---")
+    print("--- API CALLED FOR TOP TRACKS LONG TERM ---\n")
     user_top_tracks_medium_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
-    print("\n--- API CALLED FOR TOP TRACKS MEDIUM TERM ---")
+    print("--- API CALLED FOR TOP TRACKS MEDIUM TERM ---\n")
     user_top_tracks_short_term_dic = sp.current_user_top_tracks(limit=50, offset=0, time_range='short_term')
-    print("\n--- API CALLED FOR TOP TRACKS SHORT TERM ---")
+    print("--- API CALLED FOR TOP TRACKS SHORT TERM ---\n")
 
     # # Temp json write for fake api call
     # user_top_tracks_long_term_json = json.dumps(user_top_tracks_long_term_dic)
@@ -211,14 +211,14 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     featuring the columns: artist, all time, last 6 months, last month
     Improved original: using ID to find position instead of name'''
 
-    # print("Got into function")
+    # print("merge_tops_into_big_df_by_id: got into function\n")
 
     # Deffro's code has this "entity" addition, I think it is to make the function work for songs as well
     entity_type = 'artist_id' if entity.lower() == "artist" else "track_id"
 
-    # print("Entity type is: ", entity_type)
+    # print("merge_tops_into_big_df_by_id: Entity type is: ", entity_type + "\n")
 
-    # print("printing df short term:")
+    # print("merge_tops_into_big_df_by_id: printing df short term: \n")
     # with pd.option_context('display.max_rows', 1000, 'display.max_columns', 1000):
     #     display(df_st)
 
@@ -296,6 +296,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 
     ###
     # Debug prints:
+    # print()
     # print("PRINTS TO MAKE INITIAL LENGHT COMPARISON")
     # print(lt_names)
     # print("Number of names:")
@@ -304,6 +305,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     # print(lt_ids)
     # print("Number of IDs:")
     # print(len(lt_ids))
+    # print()
     ###
 
     # Retry ID for failed names
@@ -316,9 +318,9 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     if entity_type == 'artist_id':
         for name in lt_names:
             if name == 'RETRY ID':
-                print("Found a RETRY ID name field")
+                print("artist_id: Found a RETRY ID name field")
                 i = lt_names.index("RETRY ID")
-                print(f"index of RETRY ID element: {i}")
+                print(f"artist_id: index of RETRY ID element: {i}")
                 try:
                     lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'artist_name'].to_string(index=False)
                     print("got in 1st try")
@@ -351,9 +353,9 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     else:
         for name in lt_names:
             if name == 'RETRY ID':
-                print("Found a RETRY ID name field")
+                print("track_id: Found a RETRY ID name field")
                 i = lt_names.index("RETRY ID")
-                print(f"index of RETRY ID element: {i}")
+                print(f"track_id: index of RETRY ID element: {i}")
                 try:
                     lt_names[i] = df_mt.loc[df_mt[entity_type] == idstring, 'track_name'].to_string(index=False)
                     print("got in 1st try")
@@ -383,7 +385,7 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     if trimcounter > 0:
         lt_names = lt_names[:-trimcounter]
 
-    print("PRINTS TO MAKE SECOND LENGHT COMPARISON, AFTER TRYING TO LOCATE RETRY ID TRUE NAMES")
+    print("\nPRINTS TO MAKE SECOND LENGHT COMPARISON, AFTER TRYING TO LOCATE RETRY ID TRUE NAMES")
     print(lt_names)
     print("Number of names:")
     print(len(lt_names))
@@ -391,29 +393,30 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
     print(lt_ids)
     print("Number of IDs:")
     print(len(lt_ids))
+    print()
 
 
     # Trim all lists to the lt_names length if longer than lt_names: ## ALL THESE HASNT BEEN TESTED YET BUT SHOULD WORK
 
     if len(lt_names) > len(lt_ids):
         lt_names = lt_names[:len(lt_ids)]
-        print("Trimmed lt_names to match lt_ids")
+        print("Trimmed lt_names to match lt_ids\n")
 
     if len(lt_ids) > len(lt_names):
         lt_ids = lt_ids[:len(lt_names)]
-        print("Trimmed lt_ids to match lt_names") # Maybe add by how much it was trimmed?
+        print("Trimmed lt_ids to match lt_names\n") # Maybe add by how much it was trimmed?
 
     if len(lt_pos) > len(lt_names):
         lt_pos = lt_pos[:len(lt_names)]
-        print("Trimmed lt_pos to match lt_names")
+        print("Trimmed lt_pos to match lt_names\n")
 
     if len(mt_pos) > len(lt_names):
         mt_pos = mt_pos[:len(lt_names)]
-        print("Trimmed mt_post to match lt_names")
+        print("Trimmed mt_post to match lt_names\n")
 
     if len(st_pos) > len(lt_names):
         st_pos = st_pos[:len(lt_names)]
-        print("Trimmed st_pos to match lt_names")
+        print("Trimmed st_pos to match lt_names\n")
 
 
     # Create blank dataframe and add lists as columns
@@ -429,7 +432,6 @@ def merge_tops_into_big_df_by_id(df_lt, df_mt, df_st, entity="artist"):
 def count_genres(df):
     gcount = {}
     for genre_object in df['genres']:
-        # print("Genre object type is: ", type(genre_object))
         if genre_object == "Series([], )" or genre_object == []:
             genre_list = ["Uncategorized"]
         else:

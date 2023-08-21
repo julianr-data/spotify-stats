@@ -19,10 +19,10 @@ from server import top_art, top_songs, genre_sb_analysis, top_releases,\
 # API CALLS ARE MADE HERE #
 big_art_df, top_art_lt_df, top_art_mt_df, top_art_st_df = top_art() # Top artists
 top_art_list = [top_art_lt_df, top_art_mt_df, top_art_st_df, big_art_df] # long term is 0, medium term is 1, short term is 2, big is 3
-print("Top artists API calls invoked from server")
+print("Top artists API calls invoked from server\n")
 
 big_tr_df, top_tr_lt_df, top_tr_mt_df, top_tr_st_df = top_songs() # Top tracks
-print("Top tracks  API calls invoked from server")
+print("Top tracks  API calls invoked from server\n")
 
 ### DATA TRANSFORMATION & MANIPULATION ###
 
@@ -30,30 +30,30 @@ print("Top tracks  API calls invoked from server")
 
 sb_df_lt, sb_df_mt, sb_df_st, deadvar,\
 sb_df_lt_top, sb_df_mt_top, sb_df_st_top = genre_sb_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Genre sunburst
-print("Top genres sunburst data calculated")
 sb_genres_list = [sb_df_lt, sb_df_mt, sb_df_st, deadvar, sb_df_lt_top, sb_df_mt_top, sb_df_st_top] # long term is 0, medium term is 1, short term is 2, big is 3
+print("Top genres sunburst data processed\n")
 
 gen_bc_lt, gen_bc_mt, gen_bc_st = genre_barchart_analysis(top_art_lt_df, top_art_mt_df, top_art_st_df) # Genre barchart
-print("Top genres barchart data calculated")
+print("Top genres barchart data processed\n")
 
 wc_lt, wc_mt, wc_st = wcloud(top_art_lt_df, top_art_mt_df, top_art_st_df) # Wordcloud
 # zip wc_lt, wc_mt, wc_st into a list:
 wc_list = [wc_lt, wc_mt, wc_st]
-print("Wordcloud new style data generated")
+print("Wordcloud data processed\n")
 
 # TOP RELEASES #
 top_rel_lt, top_rel_mt, top_rel_st = top_releases(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top releases
 top_rel_list = [top_rel_lt, top_rel_mt, top_rel_st]
-print("Top releases data calculated")
+print("Top releases data processed\n")
 
 tr_vs_date_lt, tr_vs_date_mt, tr_vs_date_st = top_tracks_vs_release(top_tr_lt_df, top_tr_mt_df, top_tr_st_df) # Top tracks vs release date
 trvdate_list = [tr_vs_date_lt, tr_vs_date_mt, tr_vs_date_st]
-print("Top tracks vs. top releases data calculated")
+print("Top tracks vs. top releases data processed\n")
 
 # TOP DECADES #
 lt_dec, mt_dec, st_dec = decades_sb_analysis(top_tr_lt_df, top_tr_mt_df, top_tr_st_df)
 dec_list = [lt_dec, mt_dec, st_dec]
-print("Decades sunburns data calculated")
+print("Decades sunburns data processed\n")
 
 ## DATA FOR DISPLAY ##
 
