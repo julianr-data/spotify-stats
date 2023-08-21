@@ -152,7 +152,25 @@ st.subheader(f"Top songs release date vs. current popularity")
 st.write("ie. how your musical taste in this period compares to the general public current musical preferences")
 st.plotly_chart(tr_vs_date_lt, use_container_width=True)
 
+st.markdown("""---""")
+st.subheader(f"Detailed comparison of your musical taste in different time frames")
 
+col5a, col5b = st.columns(2, gap="small")
+
+with col5a:
+    st.subheader("Top Artists")
+    big_art_df_display = big_art_df.drop("Artist ID", axis=1).drop("All Time", axis=1)
+    big_art_df_display.index.name = 'All Time'
+    big_art_df_display.index += 1
+    big_art_df_display = big_art_df_display[["Last 6 Months", "Last Month", "Artist"]]
+
+
+    st.dataframe(big_art_df_display)
+
+with col5b:
+    st.subheader("Top Tracks")
+    big_tr_df_display = big_tr_df.drop("Track ID", axis=1)
+    st.dataframe(big_tr_df_display)
 
 
 
