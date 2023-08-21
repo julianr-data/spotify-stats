@@ -102,6 +102,19 @@ def tinker_bigdfs_fordisplay(df, entity):
     df = df[["Last 6 Months", "Last Month", entity]]
     return df
 
+def top_releases(lt_tracks, mt_tracks, st_tracks):
+    x = top_releases_into_df(lt_tracks)
+    y = top_releases_into_df(mt_tracks)
+    z = top_releases_into_df(st_tracks)
+    return x, y, z
+
+def top_tracks_vs_release(lt_tracks, mt_tracks, st_tracks):
+    x = top_tracks_vs_release_chart(lt_tracks)
+    y = top_tracks_vs_release_chart(mt_tracks)
+    z = top_tracks_vs_release_chart(st_tracks)
+    return x, y, z
+
+
 # REVIEW:::::::::
 
 
@@ -133,18 +146,6 @@ def genre_barchart_analysis(user_top_tracks_long_term_df, user_top_tracks_medium
     genre_count_st = pd.DataFrame({'genre':gc_series_st.index, 'count':gc_series_st.values})
 
     return genre_count_lt, genre_count_mt, genre_count_st
-
-def top_releases(lt_tracks, mt_tracks, st_tracks):
-    x = top_releases_into_df(lt_tracks)
-    y = top_releases_into_df(mt_tracks)
-    z = top_releases_into_df(st_tracks)
-    return x, y, z
-
-def top_tracks_vs_release(lt_tracks, mt_tracks, st_tracks):
-    x = top_tracks_vs_release_chart(lt_tracks)
-    y = top_tracks_vs_release_chart(mt_tracks)
-    z = top_tracks_vs_release_chart(st_tracks)
-    return x, y, z
 
 
 # tmpdf1, tmpdf2, tmpdf3 = fake_API_call_top_tracks()
