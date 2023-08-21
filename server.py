@@ -91,7 +91,16 @@ def genre_sb_analysis(user_top_artists_long_term_df, user_top_artists_medium_ter
 
     return sb_df_lt, sb_df_lt_top, sb_df_mt, sb_df_mt_top, sb_df_st, sb_df_st_top
 
-
+def tinker_bigdfs_fordisplay(df, entity):
+    try:
+        df = df.drop("Artist ID", axis=1)
+    except:
+        df = df.drop("Track ID", axis=1)
+    df= df.drop("All Time", axis=1)
+    df.index.name = 'All Time'
+    df.index += 1
+    df = df[["Last 6 Months", "Last Month", entity]]
+    return df
 
 # REVIEW:::::::::
 

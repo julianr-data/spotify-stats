@@ -8,7 +8,7 @@ import wordcloud
 
 from server import top_art, top_songs, genre_sb_analysis, top_releases,\
     top_tracks_vs_release, decades_sb_analysis, genre_barchart_analysis,\
-    top_table_noindex, wcloud
+    top_table_noindex, wcloud, tinker_bigdfs_fordisplay
 
 
 
@@ -159,17 +159,12 @@ col5a, col5b = st.columns(2, gap="small")
 
 with col5a:
     st.subheader("Top Artists")
-    big_art_df_display = big_art_df.drop("Artist ID", axis=1).drop("All Time", axis=1)
-    big_art_df_display.index.name = 'All Time'
-    big_art_df_display.index += 1
-    big_art_df_display = big_art_df_display[["Last 6 Months", "Last Month", "Artist"]]
-
-
+    big_art_df_display = tinker_bigdfs_fordisplay(big_art_df, "Artist")
     st.dataframe(big_art_df_display)
 
 with col5b:
     st.subheader("Top Tracks")
-    big_tr_df_display = big_tr_df.drop("Track ID", axis=1)
+    big_tr_df_display =  tinker_bigdfs_fordisplay(big_tr_df, "Track")
     st.dataframe(big_tr_df_display)
 
 
