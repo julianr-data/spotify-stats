@@ -68,11 +68,9 @@ rgba(0,0,0,1) 70%, rgba(29,185,84,1) 94%, rgba(30,215,96,1) 100%);}}
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
-
-
 ### SIDEBAR ###
 
-st.sidebar.image("frontend/tasti1-transp3.png")
+st.sidebar.image("frontend/app3-logo-whiteltter-transparent-narrow.png")
 st.sidebar.title("Visualize your music taste")
 timeframe = st.sidebar.radio("Choose a time frame:", ("All Time", "Last 6 Months", "Last Month"), horizontal=False, label_visibility="collapsed")
 
