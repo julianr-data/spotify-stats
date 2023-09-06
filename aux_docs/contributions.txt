@@ -1,5 +1,8 @@
 COTNRIBUTIONS OR THINGS TO HIGHLIGHT IN README
 
+inspo ademas de deffro, ver readme, sumar:
+https://github.com/induviduality/statify
+
 commented flow and functions
 requesting more data from API to use in analysis down the road
 improved tops merging function to work by id instead of name, avoiding issues when two tracks of the same name are present
@@ -13,7 +16,7 @@ added current popularity vs most listened songs vs lenght
 changed top albums logic: now its by single period
 
 frontend in streamlit, so I re-did it
-
+added oauth code for multiple users
 
 
 

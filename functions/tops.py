@@ -7,11 +7,16 @@ from IPython.display import display
 import plotly.express as px
 import json
 
-# SCOPE
+# AUTH FLOW
 scope = ["user-top-read", "user-read-playback-state"]
+OAuth = SpotifyOAuth(scope=scope,
+                     redirect_uri='http://localhost:8888',
+                     cache_path='../.cache')
+token = OAuth.get_access_token()
 
-# CLIENT
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+
+# CURSOR
+sp = spotipy.Spotify(auth_manager=OAuth)
 
 ### ### FUNCTIONS ### ###
 
