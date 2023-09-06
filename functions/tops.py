@@ -10,6 +10,7 @@ import json
 # AUTH FLOW
 scope = ["user-top-read", "user-read-playback-state"]
 OAuth = SpotifyOAuth(scope=scope,
+                     show_dialog=True,
                      redirect_uri='http://localhost:8888',
                      cache_path='../.cache')
 token = OAuth.get_access_token()
